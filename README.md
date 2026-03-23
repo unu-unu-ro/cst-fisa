@@ -37,4 +37,4 @@ Acest proiect este o aplicație web de sine stătătoare (standalone) care ofer�
 Pentru mai multe detalii despre metoda de lucru și ghidul complet, vizitați: [predicare-expozitiva.ro/ghid](https://predicare-expozitiva.ro/ghid)
 
 ---
-© Centrul de Studii Teologice (CST) & Ateliere de predicare expozitivă.
+©  Ateliere de predicare expozitivă.
