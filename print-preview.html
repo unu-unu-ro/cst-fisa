@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Previzualizare Fișă CST</title>
+    <link rel="stylesheet" href="assets/css/print-preview.css">
+</head>
+<body class="theme-black">
+    <div class="toolbar">
+        <button onclick="window.print()" class="btn-print">Printează Fișa</button>
+        <button id="toggle-themes" class="btn-back">Schimbă Tema</button>
+        <div class="tfill"></div>
+        <button onclick="window.close()" class="btn-back">Închide Previzualizarea</button>
+    </div>
+
+    <div class="header">
+        <h1>CST – Fișă de lucru (7 Pași)</h1>
+        <p>Instrument interactiv de pregătire a predicii</p>
+    </div>
+
+    <div id="preview-content">
+        <!-- Content will be rendered here by JS -->
+    </div>
+
+    <!-- External Libs -->
+    <script src="assets/external/marked.min.js"></script>
+    <script src="assets/external/dompurify.min.js"></script>
+
+    <!-- App Scripts -->
+    <script src="assets/js/utilities.js"></script>
+    <script src="assets/js/fisa-utilities.js"></script>
+    <script src="assets/js/print-preview.js"></script>
+</body>
+</html>

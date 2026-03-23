@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ro">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fișa interactivă — Ateliere de predicare expozitivă</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@500;700&family=Work+Sans:wght@300;400;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/fisa.css">
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+</head>
+
+<body>
+    <a href="https://cst.unu-unu.ro" class="header-link">
+        <header>
+            <h1>Ateliere de predicare expozitivă</h1>
+            <p>Formular Fișă de lucru — Completează online cei 7 pași</p>
+        </header>
+    </a>
+
+
+    <div class="form-container">
+        <section class="intro">
+            <p>
+                <strong>Instrucțiuni:</strong> Completează toate câmpurile pentru fiecare dintre cei 7 pași. La
+                sfârșitul formularului vei putea genera un PDF cu răspunsurile tale, formatat conform fișei originale.
+            </p>
+            <p>Pentru lămuriri despre fiecare pas, vizitează <a href="https://predicare-expozitiva.ro/ghid"
+                    target="_blank">ghidul de pregătire</a>.</p>
+        </section>
+
+        <div class="progress-indicator">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <div class="step-counter">
+                Progres fișa curentă - pasul <span id="currentStep">1</span> din 7
+                <button type="button" id="openFormattingHelp" class="info-btn" title="Ghid de formatare">i</button>
+            </div>
+            <button type="button" id="resetForm" class="simple-btn">Resetează câmpuri</button>
+            <span class="separator">|</span>
+            <button type="button" id="loadJson" class="simple-btn"
+                title="Încarcă datele dintr-un fișier raw.json salvat anterior">⬆ Încarcă din raw.json</button>
+            <span class="separator">|</span>
+            <button type="button" id="downloadJson" class="simple-btn"
+                title="Descarcă datele în format raw.json pentru editări ulterioare">⬇ Descarcă raw.json</button>
+        </div>
+
+        <div class="extra-fields" style="display: flex; gap: 2rem; margin: 2rem 0; align-items: flex-end">
+            <div class="form-group" style="flex: 1; margin-bottom: 0">
+                <label for="nume" class="extra-h3-label">Nume</label>
+                <input type="text" id="nume" name="nume" maxlength="64" placeholder="Numele complet"
+                    class="form-group-input">
+            </div>
+            <div class="form-group" style="flex: 1; margin-bottom: 0">
+                <label for="text" class="extra-h3-label">Text</label>
+                <input type="text" id="text" name="text" maxlength="64" placeholder="Text scurt"
+                    class="form-group-input">
+            </div>
+        </div>
+
+        <form id="fisaForm">
+            <div id="cst-steps">
+                <!-- generated from js -->
+            </div>
+            <div class="form-actions">
+                <button type="button" id="generatePDF" class="btn-primary">
+                    <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+                        style="margin-right: 8px;">
+                        <path
+                            d="M17 17H19C20.1046 17 21 16.1046 21 15V11C21 9.89543 20.1046 9 19 9H5C3.89543 9 3 9.89543 3 11V15C3 16.1046 3.89543 17 5 17H7M17 17H7M17 17V21H7V17M17 9V5C17 3.89543 16.1046 3 15 3H9C7.89543 3 7 3.89543 7 5V9M12 17V17.01"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                    Previzualizare PDF
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Formatting Help Modal -->
+    <div id="formattingHelpModal" class="modal" style="display: none;">
+        <div class="modal-overlay">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Ajutor Formatare (Markdown)</h3>
+                    <button type="button" id="closeFormattingHelp" class="close-modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <p>Poți folosi coduri simple Markdown pentru a formata textul din câmpurile fișei:</p>
+                    <ul class="help-list">
+                        <li><strong>**Text Îngroșat**</strong>: Folosește două asteriscuri pentru <strong>text
+                                îngroșat</strong>.</li>
+                        <li><em>*Text cursiv*</em>: Folosește un singur asterisc pentru <em>text cursiv</em>.</li>
+                        <li># Titlu: Folosește unul sau mai multe semne # pentru titluri.</li>
+                        <li>- Listă: Folosește liniuța pentru a crea o listă cu puncte.</li>
+                        <li>1. Listă: Folosește numere pentru a crea o listă numerotată.</li>
+                    </ul>
+                    <div class="modal-example">
+                        <p>Exemplu:</p>
+                        <code>**Mesaj central:** Isus este Calea</code>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; <span class="current-year"></span> Ateliere de predicare expozitivă. Toate drepturile rezervate.
+            </p>
+        </div>
+    </footer>
+
+    <!-- External Libs -->
+    <script src="assets/external/marked.min.js"></script>
+    <script src="assets/external/dompurify.min.js"></script>
+
+    <!-- App Scripts -->
+    <script src="assets/js/utilities.js"></script>
+    <script src="assets/js/fisa-utilities.js"></script>
+    <script src="assets/js/fisa.js"></script>
+</body>
+
+</html>

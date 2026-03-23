@@ -1,0 +1,1722 @@
+:root {
+  --primary-dark: #2a3f54; /* Deep desaturated blue */
+  --primary-accent: #005a5b; /* Deep Muted Teal/Petrol Blue - Professional Accent */
+  --text-primary: #333333;
+  --text-secondary: #555555;
+  --background-light: #ffffff;
+  --background-off-white: #f9f9f9; /* Slightly off-white for depth */
+  --border-color: #e0e0e0;
+  --tan-legacy: #a39680; /* Keeping for reference if needed, but phasing out */
+
+  --font-heading: "League Spartan", sans-serif; /* Existing, but we'll style it differently */
+  --font-body: "Work Sans", sans-serif; /* Existing, good clean choice */
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--background-light);
+  color: var(--text-primary);
+  line-height: 1.7; /* Increased for readability */
+  font-weight: 400; /* Default body weight */
+}
+
+header {
+  padding: 2rem 1rem; /* Reduced from 4rem */
+  text-align: center;
+  border-bottom: 1px solid var(--border-color);
+  background:
+    linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
+    url("../../assets/hero.jpg") no-repeat center/cover;
+  color: var(--background-light); /* Set default text color for header to light */
+}
+
+header h1 {
+  font-family: var(--font-heading);
+  font-size: 1.8rem; /* Reduced from 2.5rem */
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--background-light); /* Changed from primary-dark */
+  font-weight: 700;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5); /* Add shadow for readability */
+  animation: fadeInDown 1s ease;
+}
+
+header p {
+  font-size: 1rem; /* Reduced from 1.2rem */
+  color: var(--background-light); /* Changed from text-secondary */
+  margin-top: 0.5rem; /* Reduced from 0.75rem */
+  font-weight: 300;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* Add shadow for readability */
+  animation: fadeInUp 1s ease;
+}
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.bible-ref {
+  color: var(--primary-accent);
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.home-icon {
+  margin-right: 0.5em; /* Space between icon and text */
+  font-family: inherit; /* Inherit font from parent (h1) */
+  font-weight: normal; /* Ensure icon is not overly bold if h1 is very bold */
+  vertical-align: middle; /* Align icon nicely with the text */
+}
+
+.header-link {
+  text-decoration: none;
+  color: inherit; /* Ensures the link inherits the header's text color */
+}
+
+/* Responsive adjustments for header on smaller screens */
+@media (max-width: 768px) {
+  header {
+    padding: 1.5rem 1rem; /* Reduced from 2.5rem */
+  }
+
+  header h1 {
+    font-size: 1.5rem; /* Reduced from 2rem */
+  }
+
+  header p {
+    font-size: 0.9rem; /* Reduced from 1rem */
+  }
+}
+
+main {
+  max-width: 1100px; /* Wider for a more modern feel */
+  margin: 2rem auto; /* Adjusted from 3rem auto */
+  padding: 0 1rem; /* Adjusted from 0 1.5rem */
+}
+
+section {
+  margin-bottom: 2.5rem; /* Adjusted from 4rem */
+}
+
+h2.section-title {
+  font-family: var(--font-heading);
+  font-size: 1.5rem; /* Larger section titles */
+  text-transform: uppercase;
+  margin-bottom: 1.5rem; /* Adjusted from 2rem */
+  padding-bottom: 0.75rem; /* Add padding below for the border */
+  border-bottom: 2px solid var(--primary-accent); /* Changed border to bottom, using accent */
+  color: var(--primary-dark);
+  font-weight: 700;
+  letter-spacing: 1px;
+  /* Removed left border for a cleaner look */
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Larger minmax for cards */
+  gap: 2rem; /* Increased gap */
+}
+
+.card {
+  background: var(--background-light);
+  border: 1px solid var(--border-color);
+  border-radius: 8px; /* Slightly more rounded corners */
+  padding: 1.75rem 1.5rem; /* Increased padding */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); /* Softer, more modern shadow */
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease; /* Smoother transition */
+  height: 250px; /* Fixed height for the card - adjust as needed */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Distribute space */
+}
+
+.card:hover {
+  transform: translateY(-5px); /* Subtle lift effect */
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+}
+
+.card h3 {
+  font-family: var(--font-heading);
+  font-size: 1.2rem; /* Adjusted size */
+  color: var(--primary-dark);
+  margin-bottom: 0.75rem;
+  text-transform: uppercase;
+  font-weight: 700; /* Bolder card titles */
+  flex-shrink: 0; /* Prevent title from shrinking */
+}
+
+.card p {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  margin-bottom: 1.25rem; /* Increased margin */
+  line-height: 1.6;
+  flex-grow: 1; /* Allow paragraph to take available space */
+  overflow: hidden; /* Required for text truncation */
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* Adjust number of lines to show */
+  line-clamp: 3; /* Standard property */
+  -webkit-box-orient: vertical;
+  position: relative; /* Needed for the ellipsis pseudo-element */
+}
+
+.card p.truncated::after {
+  content: "...";
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background: var(--background-light); /* Match card background */
+  padding-left: 0.25em; /* Space before ellipsis */
+}
+
+.btn {
+  display: inline-block;
+  background-color: var(--primary-accent);
+  color: var(--background-light);
+  padding: 0.75rem 1.5rem; /* Larger padding for buttons */
+  font-size: 0.9rem;
+  text-decoration: none;
+  border-radius: 5px; /* Consistent with card rounding */
+  font-weight: 600; /* Bolder button text */
+  text-transform: uppercase; /* Uppercase for buttons */
+  letter-spacing: 0.5px;
+  transition:
+    background-color 0.3s ease,
+    transform 0.2s ease;
+  border: 1px solid transparent; /* For potential outline style on hover/focus */
+  margin-top: auto; /* Ensures button aligns to bottom if content is short */
+  flex-shrink: 0; /* Prevent button from shrinking */
+}
+
+.btn:hover,
+.btn:focus {
+  background-color: #004b4c; /* Slightly darker version of the new accent */
+  transform: translateY(-2px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Optional: Secondary button style */
+.btn-secondary {
+  background-color: transparent;
+  color: var(--primary-accent);
+  border: 1px solid var(--primary-accent);
+}
+
+.btn-secondary:hover,
+.btn-secondary:focus {
+  background-color: var(--primary-accent);
+  color: var(--background-light);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+footer {
+  text-align: center;
+  padding: 3rem 1rem; /* Increased padding */
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  background-color: var(--background-off-white); /* Consistent with header */
+  border-top: 1px solid var(--border-color);
+  margin-top: 4rem; /* More space before footer */
+}
+
+/* Tab Navigation */
+.tab-nav {
+  background-color: var(--background-off-white);
+  border-bottom: 1px solid var(--border-color);
+  padding: 0 1rem; /* Align with main content padding - Adjusted from 1.5rem */
+  margin-bottom: 1.5rem; /* Space between nav and content - Adjusted from 2rem */
+  position: relative; /* Added for z-index stacking context if needed later */
+  z-index: 100; /* Ensure it's above other content if it overlaps before fixing */
+  transition: all 0.3s ease-in-out; /* Smooth transition for any property changes */
+}
+
+.fixed-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  margin-bottom: 0; /* Remove bottom margin when fixed */
+  z-index: 1000; /* High z-index to stay on top */
+  /* background-color is already set on .tab-nav, so it will be inherited */
+}
+
+.tab-nav ul {
+  list-style: none;
+  display: flex;
+  justify-content: center; /* Center tabs */
+  max-width: 1100px; /* Match main content width */
+  margin: 0 auto;
+}
+
+.tab-nav li {
+  margin-right: 0; /* Remove individual margin, handled by padding/border */
+}
+
+.tab-link {
+  display: inline-block;
+  padding: 1rem 1.5rem;
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  color: var(--text-secondary);
+  text-decoration: none;
+  text-transform: uppercase;
+  font-weight: 600;
+  border-bottom: 3px solid transparent;
+  transition:
+    color 0.3s ease,
+    border-color 0.3s ease;
+  margin-bottom: -1px; /* Align with bottom border of nav */
+}
+
+.tab-link:hover {
+  color: var(--primary-dark);
+}
+
+.tab-link.active {
+  color: var(--primary-dark);
+  border-bottom-color: var(--primary-accent);
+}
+
+.main-content-padded {
+  /* This class will be added via JS to the main element */
+  /* Padding will be set dynamically via JS to match nav height */
+  padding-top: 0; /* Initial value, will be overridden by JS */
+}
+
+/* Tab Content */
+.tab-content {
+  display: none; /* Hide inactive tabs */
+}
+
+.tab-content.active {
+  display: block; /* Show active tab content */
+}
+
+/* Visually Hidden Class */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+/* Styles for res/resurse.html page */
+/* The header h1 and p on resurse.html will inherit the global header styles, including the reduced font size for h1 and adjusted padding for the header element. */
+/* The main and section margins on resurse.html will also inherit the global main and section styles. */
+
+.resource-list {
+  margin-bottom: 1.5rem; /* Adjusted from 2rem */
+}
+
+.resource-entry {
+  background-color: var(--background-off-white);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 1rem; /* Adjusted from 1.5rem */
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+.resource-entry h3 {
+  font-family: var(--font-heading);
+  font-size: 1.3rem;
+  color: var(--primary-dark);
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+}
+
+.resource-entry h3 a {
+  text-decoration: none;
+  color: inherit;
+  transition: color 0.3s ease;
+}
+
+.resource-entry h3 a:hover {
+  color: var(--primary-accent);
+}
+
+.resource-entry p {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 0; /* Remove bottom margin if it's the last element */
+}
+
+.navigation-links {
+  text-align: center;
+  margin-top: 2rem;
+  margin-bottom: 1rem; /* Adjusted from 2rem to be slightly less before footer */
+}
+
+/* Styles for res/ghid.html page */
+/* Global styles for header (h1, p, padding), main (margins, padding), and section (margins) */
+/* are inherited by ghid.html. Specific overrides for ghid.html elements are defined below. */
+.ghid-toc-main {
+  background-color: var(--background-off-white);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 2.5rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+.ghid-toc-main h2.section-title {
+  /* Specificity for TOC title */
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  font-size: 1.3rem; /* Slightly smaller for TOC */
+}
+
+.ghid-toc-main ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.ghid-toc-main ul li {
+  margin-bottom: 0.75rem;
+}
+
+.ghid-toc-main ul li a {
+  text-decoration: none;
+  color: var(--primary-dark);
+  font-weight: 600; /* Bolder links in TOC */
+  transition: color 0.3s ease;
+}
+
+.ghid-toc-main ul li a:hover {
+  color: var(--primary-accent);
+}
+
+.ghid-toc-main ul ul {
+  padding-left: 1.5rem; /* Indent sub-items */
+  margin-top: 0.5rem;
+}
+
+.ghid-toc-main ul ul li a {
+  font-weight: 400; /* Normal weight for sub-items */
+  font-size: 0.95rem;
+}
+
+.ghid-content-section {
+  margin-bottom: 2.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.ghid-content-section:last-of-type {
+  border-bottom: none;
+  margin-bottom: 1.5rem;
+}
+
+.ghid-content-section h2.section-title {
+  margin-bottom: 1.5rem; /* Adjusted from 2rem */
+}
+
+.ghid-content-section p,
+.ghid-content-section ul,
+.ghid-content-section ol {
+  margin-bottom: 1.2em;
+  text-align: justify;
+  font-size: 1rem; /* Ensure consistent font size with main page */
+  line-height: 1.7; /* Ensure consistent line height */
+}
+
+.ghid-content-section p {
+  text-indent: 1.5em; /* First line indentation for paragraphs in ghid content */
+}
+
+.ghid-content-section ul,
+.ghid-content-section ol {
+  padding-left: 2rem; /* Slightly more padding for lists in content */
+}
+
+.ghid-content-section li {
+  margin-bottom: 0.6em;
+}
+
+.ghid-subsection-main {
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+  padding-left: 1.5rem;
+  border-left: 3px solid var(--primary-accent);
+}
+
+.ghid-subsection-main h3 {
+  font-family: var(--font-heading);
+  font-size: 1.3rem;
+  color: var(--primary-dark);
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+.faq-item-main {
+  background-color: var(--background-off-white);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+.faq-item-main h3 {
+  font-family: var(--font-heading);
+  font-size: 1.2rem;
+  color: var(--primary-dark);
+  margin-bottom: 0.75rem;
+  font-weight: 700;
+}
+
+.footnote-main {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin-top: 1rem;
+  line-height: 1.5;
+  text-align: left; /* Override justify for footnotes if needed */
+  text-indent: 0; /* Remove text-indent for footnotes */
+}
+
+/* Back to content start button styles */
+.back-to-content-start {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: var(--primary-accent, #005a5b);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 15px;
+  cursor: pointer;
+  display: none; /* Initially hidden */
+  font-size: 1em;
+  z-index: 1000;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  transition:
+    opacity 0.3s ease-in-out,
+    visibility 0.3s ease-in-out;
+}
+
+.back-to-content-start:hover {
+  background-color: #004445; /* Darker shade of --primary-accent */
+}
+
+/* Ensure the button is visible when it should be */
+.back-to-content-start[style*="display: block"] {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* Floating casting button removed */
+
+/* Conference banner under nav */
+.conference-banner {
+  display: none; /* toggled via JS */
+  width: 100%;
+  background-color: var(--primary-accent);
+  color: #ffffff;
+  padding: 10px 16px;
+  text-align: center;
+  z-index: 200; /* above content but below fixed nav */
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+  margin-bottom: 1rem;
+}
+
+.conference-banner a {
+  color: #ffffff;
+  font-weight: 700;
+  text-decoration: underline;
+}
+
+/* When banner is shown, attach it to nav by removing gaps */
+.nav-banner-attached {
+  margin-bottom: 0;
+}
+
+.main-banner-attached {
+  margin-top: 0;
+}
+
+/* Small gap between nav and banner when attached */
+.tab-nav.nav-banner-attached + main .conference-banner {
+  margin-top: 0.25rem;
+}
+
+/* Styles for fisa timeline layout */
+
+.step {
+  position: relative;
+  margin-bottom: 2.5rem;
+}
+
+.step::before {
+  content: attr(data-step);
+  position: absolute;
+  left: -3rem;
+  top: 0;
+  background-color: var(--primary-accent);
+  color: white;
+  font-weight: bold;
+  width: 2rem;
+  height: 2rem;
+  line-height: 2rem;
+  text-align: center;
+  border-radius: 50%;
+  font-family: var(--font-heading);
+  box-shadow:
+    0 0 0 3px white,
+    0 0 0 5px var(--primary-accent);
+}
+
+.step h3 {
+  margin-bottom: 0.5rem;
+  color: var(--primary-dark);
+  font-family: var(--font-heading);
+  font-size: 1.3rem;
+}
+
+.step p {
+  margin: 0 0 1rem 0;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.step ul {
+  padding-left: 1.2rem;
+}
+
+.step ul li {
+  margin-bottom: 0.5rem;
+}
+
+.intro {
+  margin-bottom: 2rem;
+  background-color: var(--background-off-white);
+  border: 1px solid var(--border-color);
+  padding: 1.5rem;
+  border-radius: 6px;
+  text-indent: 2rem;
+}
+
+.intro p {
+  margin-bottom: 0.75rem;
+  text-indent: 2rem;
+}
+.hint {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  font-style: italic;
+  margin-bottom: 0.5rem;
+}
+
+/* Print to PDF button styles */
+.btn-print {
+  margin-left: 1rem;
+  background-color: #2c5aa0;
+  border: 1px solid #2c5aa0;
+}
+
+.btn-print:hover,
+.btn-print:focus {
+  background-color: #1a3d6b;
+  border-color: #1a3d6b;
+}
+
+/* Print styles for PDF generation */
+@media print {
+  /* Page setup for A4 */
+  @page {
+    size: A4;
+    margin: 2cm 1.5cm 3cm 1.5cm;
+
+    /* Header */
+    @top-center {
+      content: "Ghid de Pregătire a Fișei de Lucru - Seminar de Predicare Expozitivă Biblică";
+      font-size: 10pt;
+      font-weight: bold;
+      color: #333;
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 0.5cm;
+      margin-bottom: 1cm;
+    }
+
+    /* Footer with page numbers and date */
+    @bottom-left {
+      content: "Generat pe: " attr(data-print-date);
+      font-size: 9pt;
+      color: #666;
+    }
+
+    @bottom-center {
+      content: "Ateliere de predicare expozitivă";
+      font-size: 9pt;
+      color: #666;
+    }
+
+    @bottom-right {
+      content: "Pagina " counter(page) " din " counter(pages);
+      font-size: 9pt;
+      color: #666;
+    }
+  }
+
+  /* Reset print styles */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Hide elements that shouldn't be printed */
+  .btn,
+  .back-to-content-start,
+  .navigation-links,
+  .header-link {
+    display: none !important;
+  }
+
+  /* Print-specific body styling */
+  body {
+    font-size: 11pt;
+    line-height: 1.4;
+    color: #000;
+    background: white;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Header styling for print */
+  header {
+    background: none !important;
+    color: #000 !important;
+    border-bottom: 2px solid #333;
+    padding: 1cm 0 0.5cm 0;
+    margin-bottom: 1cm;
+    text-align: center;
+    page-break-after: avoid;
+  }
+
+  header h1 {
+    font-size: 18pt;
+    color: #000 !important;
+    text-shadow: none !important;
+    margin-bottom: 0.3cm;
+  }
+
+  header p {
+    font-size: 12pt;
+    color: #333 !important;
+    margin: 0;
+  }
+
+  /* Main content styling */
+  main {
+    max-width: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Section styling */
+  section {
+    page-break-inside: avoid;
+    margin-bottom: 1.5cm;
+  }
+
+  /* Heading styles */
+  h1 {
+    font-size: 18pt;
+    page-break-after: avoid;
+    margin-top: 1cm;
+    margin-bottom: 0.5cm;
+  }
+
+  h2 {
+    font-size: 14pt;
+    page-break-after: avoid;
+    margin-top: 0.8cm;
+    margin-bottom: 0.4cm;
+    color: #000;
+  }
+
+  h3 {
+    font-size: 12pt;
+    page-break-after: avoid;
+    margin-top: 0.6cm;
+    margin-bottom: 0.3cm;
+    color: #000;
+  }
+
+  /* Paragraph styling */
+  p {
+    margin-bottom: 0.4cm;
+    orphans: 3;
+    widows: 3;
+    text-align: justify;
+  }
+
+  /* List styling */
+  ul,
+  ol {
+    margin-bottom: 0.4cm;
+    page-break-inside: avoid;
+  }
+
+  li {
+    margin-bottom: 0.2cm;
+    page-break-inside: avoid;
+  }
+
+  /* Table of contents styling */
+  .ghid-toc-main {
+    page-break-after: always;
+    border: 1px solid #ccc;
+    padding: 0.5cm;
+    margin-bottom: 1cm;
+  }
+
+  .ghid-toc-main h2 {
+    text-align: center;
+    margin-bottom: 0.5cm;
+    padding-bottom: 0.3cm;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .ghid-toc-main ul {
+    list-style-type: none;
+    padding-left: 0;
+  }
+
+  .ghid-toc-main li {
+    margin-bottom: 0.3cm;
+  }
+
+  .ghid-toc-main a {
+    color: #000;
+    text-decoration: none;
+  }
+
+  .ghid-toc-main a::after {
+    content: leader(".") target-counter(attr(href), page);
+    float: right;
+  }
+
+  /* Content sections */
+  .ghid-content-section {
+    margin-bottom: 1cm;
+  }
+
+  .ghid-subsection-main {
+    margin-left: 0.5cm;
+    padding-left: 0.5cm;
+    border-left: 2px solid #ccc;
+    margin-bottom: 0.8cm;
+  }
+
+  /* FAQ styling */
+  .faq-item-main {
+    border: 1px solid #ddd;
+    padding: 0.4cm;
+    margin-bottom: 0.5cm;
+    background-color: #f9f9f9;
+    page-break-inside: avoid;
+  }
+
+  /* Footnotes */
+  .footnote-main {
+    font-size: 9pt;
+    margin-top: 0.5cm;
+    padding-top: 0.3cm;
+    border-top: 1px solid #ddd;
+  }
+
+  /* Strong text */
+  strong {
+    font-weight: bold;
+    color: #000;
+  }
+
+  /* Links */
+  a {
+    color: #000;
+    text-decoration: none;
+  }
+
+  /* Page breaks */
+  .page-break {
+    page-break-before: always;
+  }
+
+  /* Prevent widows and orphans */
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    page-break-after: avoid;
+  }
+
+  p,
+  li {
+    orphans: 3;
+    widows: 3;
+  }
+}
+
+/* =========================================
+   Site Navigation
+   ========================================= */
+.site-nav {
+  background-color: var(--background-off-white);
+  border-bottom: 1px solid var(--border-color);
+  padding: 0 1rem;
+  position: relative;
+  z-index: 100;
+  transition: all 0.3s ease-in-out;
+}
+
+.site-nav.fixed-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+.nav-toggle {
+  display: none;
+}
+
+.site-nav ul {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.site-nav li {
+  margin-right: 0;
+}
+
+.nav-link {
+  display: inline-block;
+  padding: 0.85rem 1.2rem;
+  font-family: var(--font-heading);
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  text-decoration: none;
+  text-transform: uppercase;
+  font-weight: 600;
+  border-bottom: 3px solid transparent;
+  transition:
+    color 0.3s ease,
+    border-color 0.3s ease;
+  margin-bottom: -1px;
+  letter-spacing: 0.5px;
+}
+
+.nav-link:hover {
+  color: var(--primary-dark);
+}
+
+.nav-link.active {
+  color: var(--primary-dark);
+  border-bottom-color: var(--primary-accent);
+}
+
+@media (max-width: 600px) {
+  .nav-toggle {
+    display: block;
+    margin-left: auto;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    padding: 0.6rem 0.2rem;
+    cursor: pointer;
+    color: var(--text-secondary);
+    line-height: 1;
+  }
+
+  .site-nav ul {
+    display: none;
+    flex-direction: column;
+    padding-bottom: 0.5rem;
+  }
+
+  .site-nav ul.nav-open {
+    display: flex;
+  }
+
+  .site-nav li {
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .site-nav li:last-child {
+    border-bottom: none;
+  }
+
+  .nav-link {
+    display: block;
+    padding: 0.75rem 0.5rem;
+    font-size: 0.85rem;
+    border-bottom: none;
+    margin-bottom: 0;
+  }
+
+  .nav-link.active {
+    color: var(--primary-dark);
+    border-bottom: none;
+    background-color: rgba(0, 90, 91, 0.06);
+    border-left: 3px solid var(--primary-accent);
+  }
+}
+
+/* =========================================
+   Homepage Styles
+   ========================================= */
+.home-intro {
+  max-width: 800px;
+  margin: 0 auto 2.5rem;
+}
+
+.home-intro p {
+  font-size: 1.05rem;
+  line-height: 1.8;
+  color: var(--text-secondary);
+  margin-bottom: 1rem;
+  text-indent: 1.5em;
+}
+
+.home-intro a {
+  color: var(--primary-accent);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.home-intro a:hover {
+  text-decoration: underline;
+}
+
+.home-intro .btn {
+  color: var(--background-light);
+}
+
+.home-intro .btn-secondary {
+  color: var(--primary-accent);
+}
+
+.home-intro .btn-secondary:hover {
+  color: var(--background-light);
+}
+
+.home-cta-buttons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  flex-wrap: wrap;
+}
+
+/* =========================================
+   Parallax Scripture Banner
+   ========================================= */
+.scripture-parallax {
+  position: relative;
+  height: 220px;
+  background: url("../../assets/hero.jpg") no-repeat center center;
+  background-size: cover;
+  background-attachment: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.scripture-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(42, 63, 84, 0.88) 0%, rgba(0, 90, 91, 0.85) 100%);
+}
+
+.scripture-content {
+  position: relative;
+  z-index: 1;
+  max-width: 900px;
+  width: 100%;
+  height: 100%;
+  padding: 2rem 2rem 1.75rem;
+  text-align: center;
+}
+
+.scripture-verse {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem 3rem 1.75rem;
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 0.8s ease,
+    transform 0.8s ease;
+  pointer-events: none;
+}
+
+.scripture-verse.active {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.scripture-verse blockquote {
+  font-size: 1.05rem;
+  font-style: italic;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.95);
+  margin: 0;
+  padding: 0 2rem;
+  font-weight: 300;
+  letter-spacing: 0.3px;
+  max-width: 800px;
+}
+
+.scripture-verse cite {
+  display: inline-block;
+  margin-top: 0.75rem;
+  font-size: 0.85rem;
+  font-style: normal;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.8);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+}
+
+.scripture-verse cite::before {
+  content: "";
+  display: block;
+  width: 30px;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.4);
+  margin: 0 auto 0.5rem;
+}
+
+/* Dot indicators */
+.scripture-dots {
+  position: absolute;
+  bottom: 0.75rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 0.5rem;
+  z-index: 2;
+}
+
+.scripture-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.35);
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition:
+    background 0.3s ease,
+    transform 0.3s ease;
+}
+
+.scripture-dot.active {
+  background: rgba(255, 255, 255, 0.9);
+  transform: scale(1.25);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .scripture-parallax {
+    height: 240px;
+    background-attachment: scroll;
+  }
+
+  .scripture-content {
+    padding: 1.75rem 1.25rem 1.5rem;
+  }
+
+  .scripture-verse {
+    padding: 1.75rem 1.25rem 1.5rem;
+  }
+
+  .scripture-verse blockquote {
+    font-size: 0.95rem;
+    padding: 0 0.5rem;
+  }
+}
+
+.home-section {
+  margin-bottom: 3rem;
+}
+
+.home-section p {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--text-secondary);
+  margin-bottom: 1rem;
+}
+
+.home-section a {
+  color: var(--primary-accent);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.home-section a:hover {
+  text-decoration: underline;
+}
+
+/* Feature cards grid */
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.feature-card {
+  background: var(--background-off-white);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 1.5rem;
+  text-align: center;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.feature-icon {
+  font-size: 2rem;
+  display: block;
+  margin-bottom: 0.75rem;
+}
+
+.feature-card h3 {
+  font-family: var(--font-heading);
+  font-size: 1.05rem;
+  color: var(--primary-dark);
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.feature-card p {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+/* How it works steps */
+.how-it-works {
+  max-width: 700px;
+  margin: 1.5rem auto 0;
+}
+
+.how-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.how-step-number {
+  flex-shrink: 0;
+  width: 2.5rem;
+  height: 2.5rem;
+  background-color: var(--primary-accent);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.how-step-content h3 {
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  color: var(--primary-dark);
+  margin-bottom: 0.25rem;
+  font-weight: 700;
+}
+
+.how-step-content p {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+}
+
+/* =========================================
+   Events Page Styles (inspired by info-unu-unu)
+   ========================================= */
+.events-page {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.events-intro {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  margin-bottom: 2rem;
+  line-height: 1.7;
+}
+
+.events-group {
+  margin-bottom: 2rem;
+}
+
+.events-group-title {
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  color: var(--primary-dark);
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+  letter-spacing: 0.5px;
+  font-weight: 700;
+}
+
+.events-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.event-item {
+  margin-bottom: 0.75rem;
+}
+
+.event-item-link {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: var(--background-light);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  text-decoration: none;
+  color: inherit;
+  transition:
+    background-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.event-item-link:hover {
+  background-color: var(--background-off-white);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.event-date {
+  flex-shrink: 0;
+  width: 60px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.event-date-day {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--primary-accent);
+  line-height: 1.2;
+  font-family: var(--font-heading);
+}
+
+.event-date-month {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  letter-spacing: 0.5px;
+  font-weight: 600;
+}
+
+.event-date-year {
+  font-size: 0.65rem;
+  color: #999;
+}
+
+.event-date-past .event-date-day {
+  color: #999;
+}
+
+.event-details {
+  flex: 1;
+  min-width: 0;
+}
+
+.event-title {
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--primary-dark);
+  margin: 0 0 0.25rem;
+}
+
+.event-location {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.event-type-badge {
+  display: inline-block;
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--primary-accent);
+  font-weight: 600;
+}
+
+.event-arrow {
+  font-size: 1.2rem;
+  color: var(--primary-accent);
+  opacity: 0;
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+  flex-shrink: 0;
+}
+
+.event-item-link:hover .event-arrow {
+  opacity: 1;
+  transform: translateX(3px);
+}
+
+/* Past events collapsible */
+.events-past-group {
+  border-top: 1px solid var(--border-color);
+  padding-top: 1rem;
+}
+
+.events-group-toggle {
+  background: none;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 0.75rem 1.25rem;
+  width: 100%;
+  text-align: left;
+  font-family: var(--font-heading);
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background-color 0.2s ease;
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.75rem;
+}
+
+.events-group-toggle:hover {
+  background-color: var(--background-off-white);
+}
+
+.toggle-icon {
+  transition: transform 0.3s ease;
+  font-size: 0.75rem;
+}
+
+.events-past-group.expanded .toggle-icon {
+  transform: rotate(180deg);
+}
+
+.past-events-list {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease;
+}
+
+.events-past-group.expanded .past-events-list {
+  max-height: 2000px;
+}
+
+.event-item-past .event-item-link {
+  opacity: 0.7;
+}
+
+.event-item-past .event-item-link:hover {
+  opacity: 1;
+}
+
+/* =========================================
+   About (Despre) Page Styles
+   ========================================= */
+.despre-section {
+  max-width: 800px;
+  margin: 0 auto 2.5rem;
+}
+
+.despre-section p {
+  font-size: 1rem;
+  line-height: 1.8;
+  color: var(--text-secondary);
+  margin-bottom: 1rem;
+}
+
+.despre-section a {
+  color: var(--primary-accent);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.despre-section .btn {
+  color: var(--background-light);
+}
+
+.despre-section .btn-secondary {
+  color: var(--primary-accent);
+}
+
+.despre-section .btn-secondary:hover {
+  color: var(--background-light);
+}
+
+.despre-section a:hover {
+  text-decoration: underline;
+}
+
+.despre-detail {
+  background: var(--background-off-white);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.despre-detail h3 {
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  color: var(--primary-dark);
+  margin-bottom: 0.75rem;
+  font-weight: 700;
+}
+
+.despre-detail ul {
+  padding-left: 1.5rem;
+  margin-top: 0.75rem;
+}
+
+.despre-detail li {
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.despre-list {
+  padding-left: 1.5rem;
+  margin: 1rem 0;
+}
+
+.despre-list li {
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+  color: var(--text-secondary);
+}
+
+/* 7-step overview on about page */
+.steps-overview {
+  margin: 1.5rem 0;
+}
+
+.step-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.step-item:last-child {
+  border-bottom: none;
+}
+
+.step-number {
+  flex-shrink: 0;
+  width: 2rem;
+  height: 2rem;
+  background-color: var(--primary-accent);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.step-item h4 {
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  color: var(--primary-dark);
+  margin-bottom: 0.25rem;
+  font-weight: 700;
+}
+
+.step-item p {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.despre-cta {
+  margin-top: 1.5rem;
+  font-size: 1rem;
+  color: var(--text-secondary);
+}
+
+/* Testimonials */
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.testimonial-card {
+  background: var(--background-off-white);
+  border: 1px solid var(--border-color);
+  border-left: 4px solid var(--primary-accent);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin: 0;
+  font-style: normal;
+}
+
+.testimonial-card p {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: var(--text-primary);
+  font-style: italic;
+  margin-bottom: 0.75rem;
+}
+
+.testimonial-card footer {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  font-weight: 600;
+  font-style: normal;
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  text-align: right;
+}
+
+/* CTA section */
+.despre-cta-section {
+  text-align: center;
+  background: var(--background-off-white);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 2rem;
+}
+
+.despre-cta-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 1.5rem;
+  flex-wrap: wrap;
+}
+
+/* Collapsible toggle sections on Despre page (same pattern as events) */
+.despre-toggle-group {
+  border-top: 1px solid var(--border-color);
+  padding-top: 0;
+  margin-bottom: 0.5rem;
+}
+
+.despre-toggle-group.expanded {
+  margin-bottom: 2.5rem;
+}
+
+.despre-toggle-btn {
+  background: none;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 0.75rem 1.25rem;
+  width: 100%;
+  text-align: left;
+  font-family: var(--font-heading);
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background-color 0.2s ease;
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  margin-bottom: 0;
+}
+
+.despre-toggle-btn:hover {
+  background-color: var(--background-off-white);
+}
+
+.despre-toggle-btn .toggle-icon {
+  transition: transform 0.3s ease;
+  font-size: 0.75rem;
+}
+
+.despre-toggle-group.expanded .toggle-icon {
+  transform: rotate(180deg);
+}
+
+.despre-toggle-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease;
+  padding: 0 0.25rem;
+}
+
+.despre-toggle-group.expanded .despre-toggle-content {
+  max-height: 5000px;
+  padding-top: 1.25rem;
+}
