@@ -1,6 +1,6 @@
 # CST – Fișă de lucru (7 Pași)
 
-Acest proiect este o aplicație web de sine stătătoare (standalone) care oferă o interfață interactivă pentru completarea fișei de studiu biblic bazată pe metoda **CST (Centrul de Studii Teologice)**. Este un instrument esențial pentru pastori și studenți care doresc să pregătească predici expozitive într-un mod structurat și eficient.
+Acest proiect este o aplicație web de sine stătătoare (standalone) care oferă o interfață interactivă pentru completarea fișei de studiu biblic bazată pe metoda **CST (Charles Simeon Trust)**. Este un instrument esențial pentru pastori și studenți care doresc să pregătească predici expozitive într-un mod structurat și eficient.
 
 ## Caracteristici principale
 
