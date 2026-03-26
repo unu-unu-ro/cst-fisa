@@ -10,7 +10,7 @@ function renderPreview(steps, values) {
       <span class="extra-label">Text:</span>
       <span class="extra-value" style="flex:1;text-align:left;">${values["text"] || emptyAns}</span>
     </div>
-    <div class="date">Completat cu <a href="https://fisa.predicare-expozitiva.ro">fisa.predicare-expozitiva.ro</a></div>
+    <div class="date">Completat cu <a href="https://fisa.predicare-expozitiva.ro" target="_blank">fisa.predicare-expozitiva.ro</a></div>
   `;
 
   html += steps

@@ -1,5 +1,7 @@
 # CST – Fișă de lucru (7 Pași)
 
+[![Live](https://img.shields.io/badge/Site-fisa.predicare--expozitiva.ro-brightgreen?style=for-the-badge)](https://fisa.predicare-expozitiva.ro)
+
 Acest proiect este o aplicație web de sine stătătoare (standalone) care oferă o interfață interactivă pentru completarea fișei de studiu biblic bazată pe metoda **CST (Charles Simeon Trust)**. Este un instrument esențial pentru pastori și studenți care doresc să pregătească predici expozitive într-un mod structurat și eficient.
 
 ## Caracteristici principale
@@ -20,10 +22,17 @@ Acest proiect este o aplicație web de sine stătătoare (standalone) care ofer�
 
 ## Cum se folosește
 
-1. Descarcă sau clonează repository-ul.
-2. Deschide fișierul `index.html` în orice browser modern.
-3. Completează pașii propuși.
-4. Folosește butonul **Previzualizare PDF** pentru a genera documentul final.
+
+## 📚 Instrucțiuni de instalare
+
+```bash
+git clone https://github.com/unu-unu-ro/cst-fisa.git
+cd cst-fisa
+npm install
+
+npm start
+```
+
 
 ## Structura Proiectului
 

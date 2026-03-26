@@ -1,0 +1,34 @@
+*.log
+*.tmp
+*.DS_Store
+*.env
+Thumbs.db
+
+# IDE folders
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Node modules (if any node dependencies are added)
+node_modules/
+package-lock.json
+
+# Dist / Build folders
+dist/
+build/
+out/
+
+# Cache and temp files
+.cache/
+.temp/
+*.bak
+*.swp
+
+# System files
+*.DS_Store
+Thumbs.db
+
+# Local cleanup scripts
+events/**/cleanup-participants.py
+events/**/generate-badge.py

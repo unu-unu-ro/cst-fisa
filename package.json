@@ -1,0 +1,42 @@
+{
+  "name": "cst-fisa",
+  "version": "1.0.0",
+  "description": "Fișa CST",
+  "keywords": [
+    "Studiul biblic",
+    "CST",
+    "Cluj",
+    "Romania",
+    "Biserica",
+    "Unu-unu"
+  ],
+  "homepage": "https://github.com/unu-unu-ro/cst-fisa#readme",
+  "bugs": {
+    "url": "https://github.com/unu-unu-ro/cst-fisa/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/unu-unu-ro/cst-fisa.git"
+  },
+  "license": "ISC",
+  "author": "Ovidiu Chis, Nicolae Matei, Daniel Dudas",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "clear": "rimraf node_modules package-lock.json",
+    "start": "browser-sync start --config scripts/bs-config.js",
+    "copy-libs": "run-os",
+    "copy-libs:macos": "mkdir -p assets/external && cp node_modules/marked/lib/marked.umd.js assets/external/marked.min.js && cp node_modules/dompurify/dist/purify.min.js assets/external/dompurify.min.js",
+    "copy-libs:windows": "mkdir assets\\external && copy node_modules\\marked\\lib\\marked.umd.js assets\\external\\marked.min.js && copy node_modules\\dompurify\\dist\\purify.min.js assets\\external\\dompurify.min.js",
+    "postinstall": "npm run copy-libs"
+  },
+  "dependencies": {
+    "dompurify": "^3.3.3",
+    "marked": "^17.0.5"
+  },
+  "devDependencies": {
+    "browser-sync": "^3.0.2",
+    "run-script-os": "^1.1.6"
+  }
+}
