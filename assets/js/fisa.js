@@ -326,7 +326,7 @@ function openPreview() {
     previewWindow.location.reload();
     previewWindow.focus();
   } else {
-    previewWindow = window.open("print-preview.html", "_blank");
+    previewWindow = window.open("print-preview", "_blank");
   }
 }
 

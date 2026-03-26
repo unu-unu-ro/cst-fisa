@@ -22,7 +22,6 @@ Acest proiect este o aplicație web de sine stătătoare (standalone) care ofer�
 
 ## Cum se folosește
 
-
 ## 📚 Instrucțiuni de instalare
 
 ```bash
@@ -33,7 +32,6 @@ npm install
 npm start
 ```
 
-
 ## Structura Proiectului
 
 - `index.html`: Pagina principală a aplicației.
@@ -43,7 +41,9 @@ npm start
 - `assets/external/`: Biblioteci externe (Marked, DOMPurify).
 
 ## Resurse
+
 Pentru mai multe detalii despre metoda de lucru și ghidul complet, vizitați: [predicare-expozitiva.ro/ghid](https://predicare-expozitiva.ro/ghid)
 
 ---
-©  Ateliere de predicare expozitivă.
+
+© Ateliere de predicare expozitivă.
