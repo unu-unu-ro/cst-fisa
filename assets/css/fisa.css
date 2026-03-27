@@ -23,33 +23,20 @@
   text-decoration: underline;
 }
 
-.form-step {
+.step {
   background: var(--background-light);
   border: 1px solid var(--border-color);
   border-radius: 8px;
   padding: 1.2rem 1rem;
-  margin-bottom: 1rem;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
-.form-step h3 {
-  font-family: var(--font-heading);
+.step h3 {
   font-size: 1.15rem;
-  color: var(--primary-dark);
-  margin-bottom: 0.7rem;
-  /* text-transform: uppercase; */
-  font-weight: 700;
-  letter-spacing: 1px;
-  padding-bottom: 0.3rem;
-  border-bottom: 2px solid var(--primary-accent);
 }
-.form-step h3 i,
+.step h3 i,
 .form-group label i {
   border-bottom: 1px solid #005a5b36;
-}
-.form-step h3 .note {
-  /* text-transform: none; */
-  font-weight: normal;
 }
 
 .form-group {
@@ -226,7 +213,7 @@ button.btn-primary {
 }
 
 @media (max-width: 768px) {
-  .form-step {
+  .step {
     padding: 0.7rem 0.5rem;
   }
 

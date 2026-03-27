@@ -10,7 +10,7 @@ function autoResizeTextareas(input) {
   }
   textareas.forEach(textarea => {
     textarea.style.height = "auto";
-    textarea.style.height = textarea.scrollHeight + 2 + "px";
+    textarea.style.height = textarea.scrollHeight + 3 + "px";
   });
 }
 
@@ -68,7 +68,7 @@ function resetFormData() {
 
 // Progress tracking
 function updateProgress() {
-  const steps = $$(".form-step");
+  const steps = $$(".step");
   let completedSteps = 0;
 
   steps.forEach((step, index) => {
@@ -290,7 +290,7 @@ function renderSteps(steps) {
   const stepsHtml = steps
     .map(
       step => `
-    <div class="form-step">
+    <div class="step">
       <h3>${step.number}. ${step.title}</h3>
       ${step.hint ? `<div class="hint">${step.hint}</div>` : ""}
       ${step.questions

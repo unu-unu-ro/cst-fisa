@@ -47,3 +47,7 @@ Pentru mai multe detalii despre metoda de lucru și ghidul complet, vizitați: [
 ---
 
 © Ateliere de predicare expozitivă.
+
+## Contribuții & Dev notes
+
+- [ ] Add footer with copyright and logo

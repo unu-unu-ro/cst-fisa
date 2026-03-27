@@ -1,0 +1,46 @@
+:root {
+  --primary-dark: #2a3f54;
+  --primary-accent: #005a5b;
+  --text-primary: #333333;
+  --text-secondary: #555555;
+  --background-light: #ffffff;
+  --background-off-white: #f9f9f9;
+  --border-color: #e0e0e0;
+
+  --font-heading: "League Spartan", sans-serif;
+  --font-body: "Work Sans", Arial, sans-serif;
+
+  --max-width: 1050px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--background-light);
+  color: var(--text-primary);
+}
+
+.step {
+  margin-bottom: 1rem;
+}
+
+.step h3 {
+  font-family: var(--font-heading);
+  color: var(--primary-dark);
+  /* text-transform: uppercase; */
+  margin-bottom: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  padding-bottom: 0.3rem;
+  border-bottom: 2px solid var(--primary-accent);
+}
+
+.step h3 .note {
+  /* text-transform: none; */
+  font-weight: normal;
+}
