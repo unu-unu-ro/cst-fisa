@@ -29,7 +29,7 @@ function persistFormData(input) {
 }
 
 function updatePageTitle(nume, text) {
-  document.title = getPageTitle(nume, text);
+  document.title = getPageTitle(nume, text) + " - Fișă de lucru";
 }
 
 function loadFormData() {

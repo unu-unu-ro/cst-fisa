@@ -234,12 +234,26 @@ button.btn-primary {
     max-width: 300px;
   }
 }
+
+#header-fields {
+  display: flex;
+  gap: 2rem;
+  margin: 2rem 0;
+  align-items: flex-end;
+}
+
 .extra-fields {
   display: flex;
   gap: 1rem;
   margin: 1rem 0;
   align-items: flex-end;
 }
+
+#header-fields .form-group {
+  flex: 1;
+  margin-bottom: 0;
+}
+
 .intro {
   margin-bottom: 1rem;
   background-color: var(--background-off-white);
