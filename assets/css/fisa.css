@@ -34,10 +34,6 @@
 .step h3 {
   font-size: 1.15rem;
 }
-.step h3 i,
-.form-group label i {
-  border-bottom: 1px solid #005a5b36;
-}
 
 .form-group {
   margin-bottom: 0.7rem;

@@ -11,10 +11,16 @@ body {
 }
 
 .header {
+  display: flex;
+  align-items: center;
   text-align: center;
   margin-bottom: 1.5rem;
   border-bottom: 1px solid #005a5b;
   padding-bottom: 0.8rem;
+  padding-left: 60px;
+}
+.header-text {
+  flex: 1;
 }
 .header h1 {
   color: #2a3f54;
@@ -26,6 +32,9 @@ body {
   color: #555;
   margin: 0;
   font-size: 0.9rem;
+}
+.header img {
+  height: 30px;
 }
 
 a {
@@ -50,28 +59,23 @@ li {
 
 .extra-row {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
   margin: 1.2rem 0 0.8rem 0;
   font-size: 1rem;
-  gap: 0.5rem;
+  gap: 0.1rem;
 }
 .extra-row .extra-label {
   font-weight: bold;
   color: #2a3f54;
 }
 .extra-row .extra-value {
-  flex: 1;
+  /* flex: 1; */
+  padding: 0 0.4rem;
   color: #333;
   font-style: normal;
   text-align: center;
   border-bottom: 1px solid #005a5b36;
-}
-.date {
-  text-align: right;
-  margin-bottom: 1rem;
-  font-size: 0.8rem;
-  color: #666;
 }
 
 .step h3 {
@@ -184,6 +188,33 @@ body {
 #toggle-themes.theme-red:hover {
   color: #a00000;
 }
+
+footer {
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 5px 15px 5px 95px;
+  background: #ffffffaa;
+}
+footer .date {
+  font-size: 0.6rem;
+  color: #666;
+}
+footer .footer-text {
+  flex: 1;
+  font-size: 0.7rem;
+  text-align: center;
+  color: #333;
+}
+footer .footer-text .copyright {
+  font-variant: small-caps;
+}
+footer img {
+  height: 36px;
+}
+
 /* === === === === === === */
 
 @media print {
@@ -220,5 +251,12 @@ body {
   .extra-row {
     font-size: 0.95rem;
     margin: 0.8rem 0;
+  }
+
+  footer {
+    display: none;
+    /* position: fixed; */
+    /* bottom: 0; */
+    /* left: 0; */
   }
 }

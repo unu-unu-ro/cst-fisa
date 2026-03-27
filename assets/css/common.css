@@ -44,3 +44,9 @@ body {
   /* text-transform: none; */
   font-weight: normal;
 }
+
+.step h3 i,
+.form-group label i,
+.question-label i {
+  border-bottom: 1px solid #005a5b36;
+}

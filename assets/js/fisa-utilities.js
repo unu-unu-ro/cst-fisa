@@ -68,7 +68,6 @@ const STEPS = [
       {
         label: "într-o singură propoziție scurtă",
         field: "ideea-autorului",
-        //hint: "(într-o singură propoziție scurtă)",
         placeholder: "Formulează într-o propoziție clară și concisă ideea centrală a autorului",
         required: true
       }
