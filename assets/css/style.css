@@ -68,13 +68,10 @@ header p {
 }
 
 footer {
-  text-align: center;
-  padding: 3rem 1rem;
-  font-size: 0.9rem;
-  color: var(--text-secondary);
-  background-color: var(--background-off-white);
-  border-top: 1px solid var(--border-color);
-  margin-top: 4rem;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  margin: 0 auto;
+  padding: 15px 15px 15px 95px;
 }
 
 @media (max-width: 768px) {

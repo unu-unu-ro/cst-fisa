@@ -368,11 +368,6 @@ function updatePreviewWindow(input) {
 document.addEventListener("DOMContentLoaded", function () {
   renderSteps(STEPS);
 
-  // Set Current Year
-  $$(".current-year").forEach(el => {
-    el.textContent = new Date().getFullYear();
-  });
-
   // Load saved form data
   loadFormData();
 
