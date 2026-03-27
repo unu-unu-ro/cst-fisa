@@ -6,9 +6,11 @@ function renderPreview(steps, values) {
   let html = `
     <div class="extra-row">
       <span class="extra-label">Nume:</span>
-      <span class="extra-value" style="flex:1;text-align:left;">${values["nume"] || emptyAns}</span>
+      <span class="extra-value">${values["nume"] || emptyAns}</span>
       <span class="extra-label">Text:</span>
-      <span class="extra-value" style="flex:1;text-align:left;">${values["text"] || emptyAns}</span>
+      <span class="extra-value">${values["text"] || emptyAns}</span>
+      <span class="extra-label">Publicul țintă:</span>
+      <span class="extra-value">${values["target-public"] || emptyAns}</span>
     </div>
     <div class="date">Completat cu <a href="https://fisa.predicare-expozitiva.ro" target="_blank">fisa.predicare-expozitiva.ro</a></div>
   `;

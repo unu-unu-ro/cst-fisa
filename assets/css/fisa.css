@@ -37,11 +37,19 @@
   font-size: 1.15rem;
   color: var(--primary-dark);
   margin-bottom: 0.7rem;
-  text-transform: uppercase;
+  /* text-transform: uppercase; */
   font-weight: 700;
   letter-spacing: 1px;
-  border-bottom: 2px solid var(--primary-accent);
   padding-bottom: 0.3rem;
+  border-bottom: 2px solid var(--primary-accent);
+}
+.form-step h3 i,
+.form-group label i {
+  border-bottom: 1px solid #005a5b36;
+}
+.form-step h3 .note {
+  /* text-transform: none; */
+  font-weight: normal;
 }
 
 .form-group {

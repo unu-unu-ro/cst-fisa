@@ -7,23 +7,23 @@ const STORAGE_KEY = "fisa-form-data";
 const STEPS = [
   {
     number: 1,
-    title: "Structura textului",
+    title: "În ce fel a structurat autorul acest pasaj? <span class='note'>Te rugăm:</span>",
     questions: [
       {
-        label: "a) Arată structura sub formă de secțiuni, alături de versetele aferente",
+        label: "a) să arăți structura sub formă de <i>secțiuni</i>, alături de versetele aferente.",
         field: "structura-sectiuni",
         placeholder: "Ex: I. Introducere (v. 1-3)\nII. Dezvoltarea principală (v. 4-10)\netc.",
         required: true,
         cls: "large"
       },
       {
-        label: "b) Explică strategiile folosite pentru a identifica structura",
+        label: "b) să explici <i>strategiile</i> pe care le-ai folosit pentru a identifica această structură.",
         field: "structura-strategii",
         placeholder: "Ex: Cuvinte cheie repetate, conjuncții, schimbări de ton, etc.",
         required: true
       },
       {
-        label: "c) Pe ce pune accent această structură?",
+        label: "c) ce <i>accent</i> ai dedus din această structură?",
         field: "structura-accent",
         placeholder: "Explică tema principală evidențiată prin structura identificată",
         required: true
@@ -32,8 +32,8 @@ const STEPS = [
   },
   {
     number: 2,
-    title: "Contextul pasajului",
-    hint: "Indicație: Te rugăm să le incluzi doar pe cele care sunt relevante pentru înțelesul pasajului",
+    title: "Cum contribuie contextul la înțelegerea acestui pasaj?",
+    hint: "Indicație: Te rugăm să incluzi doar ceea ce este relevant pentru înțelesul pasajului.",
     questions: [
       {
         label: "a) Contextul literar",
@@ -63,12 +63,12 @@ const STEPS = [
   },
   {
     number: 3,
-    title: "Ideea autorului",
+    title: "Care este ideea centrală pe care o argumentează autorul înaintea <i>ascultătorilor săi?</i>",
     questions: [
       {
-        label: "Care este ideea centrală pe care o argumentează autorul în fața ascultătorilor săi?",
+        label: "într-o singură propoziție scurtă",
         field: "ideea-autorului",
-        hint: "într-o propoziție scurtă",
+        //hint: "(într-o singură propoziție scurtă)",
         placeholder: "Formulează într-o propoziție clară și concisă ideea centrală a autorului",
         required: true
       }
@@ -76,11 +76,11 @@ const STEPS = [
   },
   {
     number: 4,
-    title: "Legătura cu Evanghelia",
+    title: "Care este legătura dintre acest pasaj și Evanghelia Domnului Isus Cristos?",
     questions: [
       {
         label:
-          "Care este legătura dintre acest pasaj și Evanghelia Domnului Isus Cristos? Ce parte a Evangheliei este avută în vedere?",
+          "Cum se raportează această legătură cu Evanghelia la ideea centrală a autorului? De ce este importantă această legătură cu Evanghelia pentru ascultătorii tăi?",
         field: "legatura-evanghelia",
         placeholder:
           "Explică cum se conectează pasajul cu Evanghelia și ce aspect specific al Evangheliei este evidențiat",
@@ -91,12 +91,11 @@ const STEPS = [
   },
   {
     number: 5,
-    title: "Ideea ta centrală",
+    title: "Care este ideea centrală pe care tu o vei argumenta înaintea <i>ascultătorilor tăi?</i>",
     questions: [
       {
-        label: "Care este ideea centrală pe care tu o vei argumenta în fața ascultătorilor tăi?",
+        label: "într-o singură propoziție scurtă",
         field: "ideea-mea",
-        hint: "într-o propoziție scurtă",
         placeholder: "Formulează ideea centrală pe care o vei predica, bazată pe înțelegerea pasajului",
         required: true
       }
@@ -104,27 +103,7 @@ const STEPS = [
   },
   {
     number: 6,
-    title: "Aplicații",
-    questions: [
-      {
-        label: "Aplicații pentru cei mântuiți",
-        field: "aplicatii-mantuiti",
-        placeholder: "Aplicații practice și spirituale pentru creștini",
-        required: true,
-        cls: "large"
-      },
-      {
-        label: "Aplicații pentru cei nemântuiți",
-        field: "aplicatii-nemantuiti",
-        placeholder: "Aplicații și îndemnuri pentru cei care nu sunt încă creștini",
-        required: true,
-        cls: "large"
-      }
-    ]
-  },
-  {
-    number: 7,
-    title: "Titlu și schiță",
+    title: "Ce titlul și schiță de predică vei folosi pentru a-ți argumenta ideea centrală?",
     questions: [
       {
         label: "Care este titlul predicii tale?",
@@ -137,6 +116,27 @@ const STEPS = [
         label: "Cum arată schița mesajului?",
         field: "schita-mesaj",
         placeholder: "I. Introducere\nII. Punctul principal 1\nIII. Punctul principal 2\nIV. Concluzie",
+        required: true,
+        cls: "large"
+      }
+    ]
+  },
+  {
+    number: 7,
+    title: "Cum îți vei aplica ideea centrală spre binele ascultătorilor tăi?",
+    hint: "Gândește-te deopotrivă la cei mântuiți și la cei nemântuiți. Indică unde anume vei include aceste aplicații în predica ta.",
+    questions: [
+      {
+        label: "Aplicații pentru cei mântuiți",
+        field: "aplicatii-mantuiti",
+        placeholder: "Aplicații practice și spirituale pentru creștini",
+        required: true,
+        cls: "large"
+      },
+      {
+        label: "Aplicații pentru cei nemântuiți",
+        field: "aplicatii-nemantuiti",
+        placeholder: "Aplicații și îndemnuri pentru cei care nu sunt încă creștini",
         required: true,
         cls: "large"
       }

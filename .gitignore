@@ -25,6 +25,9 @@ out/
 *.bak
 *.swp
 
+# Microsoft Office temporary files
+~$*.docx
+
 # System files
 *.DS_Store
 Thumbs.db
