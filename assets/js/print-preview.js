@@ -24,7 +24,7 @@ function renderPreview(steps, values) {
           q => `
         <div class="question">
           <div class="question-label">${q.label}</div>
-          <div class="answer">${parseMarkdown(values[q.field]) || emptyAns}</div>
+          <div class="answer">${renderContent(values[q.field]) || emptyAns}</div>
         </div>`
         )
         .join("")}

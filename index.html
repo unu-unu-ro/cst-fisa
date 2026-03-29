@@ -10,6 +10,7 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="assets/css/common.css" />
+    <link rel="stylesheet" href="assets/css/rich-editor.css" />
     <link rel="stylesheet" href="assets/css/style.css" />
     <link rel="stylesheet" href="assets/css/fisa.css" />
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
@@ -103,6 +104,10 @@
         </div>
       </div>
 
+      <div class="rich-toolbar-wrapper">
+        <!-- generated from js -->
+      </div>
+
       <form id="fisaForm">
         <div id="cst-steps">
           <!-- generated from js -->
@@ -136,24 +141,30 @@
       <div class="modal-overlay">
         <div class="modal-content">
           <div class="modal-header">
-            <h3>Ajutor Formatare (Markdown)</h3>
+            <h3>Ajutor Formatare</h3>
             <button type="button" id="closeFormattingHelp" class="close-modal">&times;</button>
           </div>
           <div class="modal-body">
-            <p>Poți folosi coduri simple Markdown pentru a formata textul din câmpurile fișei:</p>
+            <p>
+              Folosește bara de instrumente pentru a formata textul. Selectează textul mai întâi, apoi aplică formatarea
+              dorită:
+            </p>
             <ul class="help-list">
+              <li><strong>B</strong> &mdash; <strong>Text îngroșat</strong></li>
+              <li><em>I</em> &mdash; <em>Text cursiv</em></li>
+              <li><u>U</u> &mdash; <u>Text subliniat</u></li>
+              <li><strong>A</strong> (culoare text) &mdash; Schimbă culoarea textului selectat</li>
               <li>
-                <strong>**Text Îngroșat**</strong>: Folosește două asteriscuri pentru <strong>text îngroșat</strong>.
+                <strong style="background: #ffff00">A</strong> (fundal) &mdash; Evidențiază textul selectat cu o culoare
+                de fundal
               </li>
-              <li><em>*Text cursiv*</em>: Folosește un singur asterisc pentru <em>text cursiv</em>.</li>
-              <li># Titlu: Folosește unul sau mai multe semne # pentru titluri.</li>
-              <li>- Listă: Folosește liniuța pentru a crea o listă cu puncte.</li>
-              <li>1. Listă: Folosește numere pentru a crea o listă numerotată.</li>
+              <li>&#x2630; &mdash; Adaugă o listă cu puncte</li>
+              <li>&#x2116; &mdash; Adaugă o listă numerotată</li>
+              <li>&#8676; / &#8677; &mdash; Micșorează / Mărește indentarea</li>
             </ul>
-            <div class="modal-example">
-              <p>Exemplu:</p>
-              <code>**Mesaj central:** Isus este Calea</code>
-            </div>
+            <p style="margin-top: 0.75rem; font-size: 0.85rem; color: var(--text-secondary)">
+              Formatarea se salvează automat și apare în previzualizarea PDF.
+            </p>
           </div>
         </div>
       </div>
@@ -176,6 +187,7 @@
     <!-- App Scripts -->
     <script src="assets/js/utilities.js"></script>
     <script src="assets/js/fisa-utilities.js"></script>
+    <script src="assets/js/rich-editor.js"></script>
     <script src="assets/js/fisa.js"></script>
   </body>
 </html>

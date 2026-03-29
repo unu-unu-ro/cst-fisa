@@ -38,19 +38,27 @@ function getFileName(name) {
 }
 
 function getFormValues() {
-  return $$("input, textarea").reduce((data, input) => {
-    if (input.name) {
-      data[input.name] = input.value;
-    }
-    return data;
-  }, {});
+  const data = {};
+  $$("input[name]").forEach(input => {
+    data[input.name] = input.value;
+  });
+  $$("[data-field]").forEach(editor => {
+    const html = editor.innerHTML;
+    data[editor.dataset.field] = html === "<br>" ? "" : html;
+  });
+  return data;
 }
 
 function setFormValues(data) {
   Object.keys(data).forEach(name => {
-    const input = $(`[name="${name}"]`);
+    const input = $(`input[name="${name}"]`);
     if (input) {
-      input.value = data[name];
+      input.value = data[name] || "";
+      return;
+    }
+    const editor = $(`[data-field="${name}"]`);
+    if (editor) {
+      editor.innerHTML = window.DOMPurify.sanitize(data[name] || "");
     }
   });
 }

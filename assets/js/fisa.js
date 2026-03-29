@@ -1,21 +1,9 @@
 // PDF Generation using browser print functionality
 let previewWindow = null;
 
-function autoResizeTextareas(input) {
-  let textareas;
-  if (input && input.tagName.toLowerCase() === "textarea") {
-    textareas = [input];
-  } else {
-    textareas = $$("textarea");
-  }
-  textareas.forEach(textarea => {
-    textarea.style.height = "auto";
-    textarea.style.height = textarea.scrollHeight + 3 + "px";
-  });
-}
-
 function persistFormData(input) {
   const formData = getFormValues();
+  formData.version = 2;
   localStorage.setItem(STORAGE_KEY, JSON.stringify(formData));
 
   // Save Nume separately
@@ -24,7 +12,6 @@ function persistFormData(input) {
 
   // Update page title with name and text
   updatePageTitle(formData.nume, formData.text);
-  autoResizeTextareas(input);
   return formData;
 }
 
@@ -44,7 +31,6 @@ function loadFormData() {
   }
 
   updatePageTitle(numeInput.value, $("#text").value);
-  autoResizeTextareas();
 }
 
 function resetFormData() {
@@ -54,13 +40,14 @@ function resetFormData() {
       localStorage.removeItem(STORAGE_KEY);
       $("form").reset();
       $("#text").value = ""; // text is outside form, so reset separately
-      const inputs = $$("input, textarea");
-      inputs.forEach(input => {
-        input.classList.remove("error");
+      $$("[data-field]").forEach(editor => {
+        editor.innerHTML = "";
+      });
+      $$("input, [data-field]").forEach(el => {
+        el.classList.remove("error");
       });
       $$(".error-message").forEach(msg => msg.remove());
       updateProgress();
-      autoResizeTextareas();
     },
     true
   );
@@ -71,9 +58,12 @@ function updateProgress() {
   const steps = $$(".step");
   let completedSteps = 0;
 
-  steps.forEach((step, index) => {
-    const requiredFields = step.querySelectorAll("[required]");
-    const stepCompleted = Array.from(requiredFields).every(field => field.value.trim());
+  steps.forEach(step => {
+    const requiredFields = $$("[required], [data-required]", step);
+    const stepCompleted = requiredFields.every(field => {
+      const value = field.contentEditable === "true" ? field.textContent : field.value || "";
+      return value.trim();
+    });
 
     if (stepCompleted) {
       completedSteps++;
@@ -86,8 +76,11 @@ function updateProgress() {
   // Update current step indicator
   let currentStep = 1;
   for (let i = 0; i < steps.length; i++) {
-    const requiredFields = steps[i].querySelectorAll("[required]");
-    const stepCompleted = Array.from(requiredFields).every(field => field.value.trim());
+    const requiredFields = $$("[required], [data-required]", steps[i]);
+    const stepCompleted = requiredFields.every(field => {
+      const value = field.contentEditable === "true" ? field.textContent : field.value || "";
+      return value.trim();
+    });
     if (!stepCompleted) {
       currentStep = i + 1;
       break;
@@ -101,7 +94,7 @@ function updateProgress() {
 
 // Form validation
 function validateForm() {
-  const requiredFields = $$("[required]");
+  const requiredFields = $$("[required], [data-required]");
   let isValid = true;
 
   // Clear previous errors
@@ -109,7 +102,8 @@ function validateForm() {
   $$(".error-message").forEach(msg => msg.remove());
 
   requiredFields.forEach(field => {
-    if (!field.value.trim()) {
+    const value = field.contentEditable === "true" ? field.textContent : field.value || "";
+    if (!value.trim()) {
       field.classList.add("error");
 
       const errorMsg = document.createElement("div");
@@ -251,7 +245,7 @@ function loadJson() {
     const reader = new FileReader();
     reader.onload = function (e) {
       try {
-        const data = JSON.parse(e.target.result);
+        const data = migrateToV2(JSON.parse(e.target.result));
         setFormValues(data);
         persistFormData();
         updateProgress();
@@ -276,6 +270,7 @@ function downloadJson() {
   const values = getFormValues();
   const date = new Date();
   values.date = date.toISOString();
+  values.version = 2;
   const rawData = JSON.stringify(values, null, 2);
   // Swedish locale) produces ISO-like local time.
   const dateStr = date.toLocaleString("sv").slice(0, 16).replace(":", "-").replace(" ", "_");
@@ -299,10 +294,11 @@ function renderSteps(steps) {
           const reqMark = q.required ? ' <span class="required">*</span>' : "";
           const placeholder = q.placeholder ? q.placeholder.replace(/\n/g, "&#10;") : "";
           const phAttr = placeholder ? ` placeholder="${placeholder}"` : "";
+          const phData = placeholder ? ` data-placeholder="${placeholder.replace(/&#10;/g, " / ")}"` : "";
           const field =
             q.type === "text"
               ? `<input type="text" id="${q.field}" name="${q.field}"${required}${phAttr} class="form-group-input" />`
-              : `<textarea id="${q.field}" name="${q.field}"${required}${q.cls ? ` class="${q.cls}"` : ""}${phAttr}></textarea>`;
+              : `<div class="rich-editor${q.cls ? " " + q.cls : ""}" id="${q.field}" data-field="${q.field}"${q.required ? ' data-required="true"' : ""}${phData} contenteditable="true"></div>`;
           return `
         <div class="form-group">
           <label for="${q.field}">
@@ -359,20 +355,21 @@ function generatePDF() {
 function updatePreviewWindow(input) {
   // TODO - optimize by only sending updated field instead of reloading entire preview
   if (previewWindow && !previewWindow.closed) {
-    console.info("Updating preview window due to input[%o] change:", input.name);
+    console.info("Updating preview window due to field[%o] change:", input.name || input.dataset.field);
     previewWindow.location.reload();
   }
 }
 
 // Event listeners
 document.addEventListener("DOMContentLoaded", function () {
+  renderRichToolbar();
   renderSteps(STEPS);
 
   // Load saved form data
   loadFormData();
 
   // Update progress on input and save data
-  const inputs = $$("input, textarea");
+  const inputs = $$("input[name], [data-field]");
   inputs.forEach(input => {
     input.addEventListener(
       "input",
@@ -383,9 +380,35 @@ document.addEventListener("DOMContentLoaded", function () {
       }, 300)
     );
 
+    input.addEventListener("focus", function () {
+      activeEditor = this.dataset.field ? this : null;
+      updateToolbarState();
+    });
+
+    if (input.dataset.field) {
+      input.addEventListener("paste", function (e) {
+        e.preventDefault();
+        document.execCommand("insertHTML", false, getCleanPasteHTML(e.clipboardData));
+        persistFormData(input);
+      });
+
+      input.addEventListener("keydown", function (e) {
+        if (e.key === "Tab") {
+          e.preventDefault();
+          if (e.shiftKey) {
+            document.execCommand("outdent", false, null);
+          } else {
+            document.execCommand("indent", false, null);
+          }
+          persistFormData(input);
+        }
+      });
+    }
+
     input.addEventListener("blur", function () {
-      // Clear error state when user starts typing
-      if (this.classList.contains("error") && this.value.trim()) {
+      // Clear error state when field has value
+      const value = this.contentEditable === "true" ? this.textContent : this.value || "";
+      if (this.classList.contains("error") && value.trim()) {
         this.classList.remove("error");
         const errorMsg = this.parentNode.querySelector(".error-message");
         if (errorMsg) {
@@ -433,6 +456,9 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
   }
+
+  // Initialize rich text toolbar
+  initRichToolbar();
 
   // Initial progress update
   updateProgress();

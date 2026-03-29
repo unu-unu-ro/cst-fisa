@@ -50,4 +50,11 @@ Pentru mai multe detalii despre metoda de lucru și ghidul complet, vizitați: [
 
 ## Contribuții & Dev notes
 
-- [ ] Add footer with copyright and logo
+- [ ] When save pdf also save the raw json file.
+- [ ] when users tries to print the page, show a message that they should use the "Save PDF" button instead. Or better redirect them to the print preview page with auto download of the pdf. (Auto-print if `?print=1` is in the URL)
+- [ ] Rich Text Toolbar improvements:
+  - [ ] reuse 'Rich Text Toolbar' into the print preview page, so users can edit the content there as well.
+  - [ ] button for handling clear formatting of the text (remove all styles but keep the text content and line breaks)
+  - [ ] copy/paste formatting
+  - [ ] on mobile when focus in a contenteditable field toolbar is moved to upper and not visible.
+- [ ] add a "Notes" section at the end of the form, for users to add any additional thoughts or comments that don't fit into the structured steps.

@@ -143,6 +143,15 @@ const STEPS = [
   }
 ];
 
+// TODO auto calculate based on STEPS (all except type: "text")
+const RICH_FIELDS = STEPS.reduce((fields, step) => {
+  step.questions.forEach(q => {
+    if (q.type === "text") return;
+    fields.push(q.field);
+  });
+  return fields;
+}, []);
+
 function getPageTitle(nume, text) {
   nume = nume || "";
   text = text || "";
@@ -160,11 +169,22 @@ function getPageTitle(nume, text) {
   return title;
 }
 
+function migrateToV2(data) {
+  if (!data || data.version >= 2) return data;
+  RICH_FIELDS.forEach(field => {
+    if (data[field] && typeof data[field] === "string") {
+      data[field] = window.DOMPurify.sanitize(window.marked.parse(data[field]));
+    }
+  });
+  data.version = 2;
+  return data;
+}
+
 function getPersistedData() {
   const savedData = localStorage.getItem(STORAGE_KEY);
   if (savedData) {
     try {
-      return JSON.parse(savedData);
+      return migrateToV2(JSON.parse(savedData));
     } catch (e) {
       console.error("Error parsing saved form data:", e);
       return {};
@@ -179,4 +199,14 @@ function parseMarkdown(text) {
   text = text.replaceAll("  ", " &nbsp;"); // replace double spaces with non-breaking space
   const html = window.marked.parse(text);
   return window.DOMPurify.sanitize(html);
+}
+
+function renderContent(value) {
+  if (!value) return "";
+  // v2: already HTML — sanitize and render directly
+  if (/<[a-z][\s\S]*>/i.test(value)) {
+    return window.DOMPurify.sanitize(value);
+  }
+  // v1 legacy: plain markdown text
+  return parseMarkdown(value);
 }

@@ -1,0 +1,126 @@
+.rich-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 0.35rem 0.5rem;
+  background: var(--background-off-white);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  flex-wrap: wrap;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+}
+
+.rich-toolbar button,
+.rich-toolbar .toolbar-color-btn {
+  background: none;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  padding: 0.2rem 0.45rem;
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  transition:
+    background 0.15s,
+    border-color 0.15s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 30px;
+  height: 30px;
+  user-select: none;
+  -webkit-user-select: none;
+  font-weight: bold;
+}
+
+.rich-toolbar button:hover,
+.rich-toolbar .toolbar-color-btn:hover {
+  background: #e8e8e8;
+  border-color: var(--border-color);
+}
+
+.rich-toolbar button.active {
+  background: #d3e3fd;
+  border-color: #d3e3fd;
+}
+
+.toolbar-divider {
+  width: 1px;
+  height: 20px;
+  background: var(--border-color);
+  margin: 0 4px;
+  flex-shrink: 0;
+}
+
+.toolbar-color-btn {
+  position: relative;
+  cursor: pointer;
+}
+
+.toolbar-color-btn input[type="color"] {
+  position: absolute;
+  width: 0;
+  height: 0;
+  opacity: 0;
+  pointer-events: none;
+  top: 100%;
+  left: 0;
+}
+
+.color-swatch {
+  font-weight: 700;
+  font-size: 1rem;
+  line-height: 1;
+  padding: 0 3px;
+  border-bottom: 3px solid #e74c3c;
+}
+
+.bg-swatch {
+  border-bottom-color: transparent;
+  background-color: #ffff00;
+  padding: 1px 3px;
+}
+
+.rich-editor {
+  width: 100%;
+  min-height: 80px;
+  padding: 0.5rem;
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+  font-family: var(--font-body);
+  background-color: var(--background-light);
+  transition:
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+  outline: none;
+  overflow: auto;
+  box-sizing: border-box;
+  cursor: text;
+}
+
+.rich-editor.large {
+  min-height: 100px;
+}
+
+.rich-editor:focus {
+  border-color: var(--primary-accent);
+  box-shadow: 0 0 0 3px rgba(0, 90, 91, 0.1);
+}
+
+.rich-editor:empty::before {
+  content: attr(data-placeholder);
+  color: #aaa;
+  pointer-events: none;
+  display: block;
+}
+
+.rich-editor ul,
+.rich-editor ol {
+  padding-left: 1.5em;
+}
+
+.rich-editor * {
+  font-size: inherit;
+  font-family: inherit;
+  line-height: inherit;
+}
