@@ -29,7 +29,6 @@ body {
   position: sticky;
   top: 0;
   z-index: 100;
-  /* background: #fff; */
   padding-bottom: 0.75rem;
 }
 /* first half white */
@@ -60,7 +59,6 @@ body {
 }
 
 .step h3 .note {
-  /* text-transform: none; */
   font-weight: normal;
 }
 
@@ -100,5 +98,28 @@ footer img {
   footer {
     padding: 5px;
     gap: 0.2rem;
+  }
+
+  #rich-toolbar-wrapper {
+    position: fixed;
+    top: auto;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--background-light);
+    border-top: 1px solid var(--border-color);
+    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.08);
+    padding: 0.4rem 0.5rem;
+    padding-bottom: max(0.4rem, env(safe-area-inset-bottom));
+    z-index: 200;
+  }
+
+  #rich-toolbar-wrapper::before {
+    display: none;
+  }
+
+  /* Space so content isn't hidden behind the fixed toolbar */
+  .form-container {
+    padding-bottom: 70px;
   }
 }

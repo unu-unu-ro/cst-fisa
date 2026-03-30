@@ -57,4 +57,4 @@ Pentru mai multe detalii despre metoda de lucru și ghidul complet, vizitați: [
   - [ ] button for handling clear formatting of the text (remove all styles but keep the text content and line breaks)
   - [ ] copy/paste formatting
   - [ ] on mobile when focus in a contenteditable field toolbar is moved to upper and not visible.
-- [ ] add a "Notes" section at the end of the form, for users to add any additional thoughts or comments that don't fit into the structured steps.
+- [ ] add a "Personal Notes" section at the end of the form, for users to add any additional thoughts or comments that don't fit into the structured steps - this will be stored in the storage and json but not shown in the print-preview/pdf.

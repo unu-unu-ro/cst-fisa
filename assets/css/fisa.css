@@ -66,8 +66,7 @@
   margin-bottom: 0.2rem;
 }
 
-.form-group input[type="text"],
-.form-group textarea {
+.form-group input[type="text"] {
   width: 100%;
   padding: 0.5rem;
   border: 1px solid var(--border-color);
@@ -81,20 +80,10 @@
     box-shadow 0.3s ease;
 }
 
-.form-group input[type="text"]:focus,
-.form-group textarea:focus {
+.form-group input[type="text"]:focus {
   outline: none;
   border-color: var(--primary-accent);
   box-shadow: 0 0 0 3px rgba(0, 90, 91, 0.1);
-}
-
-.form-group textarea {
-  min-height: 80px;
-  resize: vertical;
-}
-
-.form-group textarea.large {
-  min-height: 100px;
 }
 
 .form-actions {
@@ -223,6 +212,10 @@ button.btn-primary {
     margin: 0.3rem auto;
     width: 100%;
     max-width: 300px;
+  }
+
+  .form-group input[type="text"] {
+    font-size: 16px;
   }
 }
 

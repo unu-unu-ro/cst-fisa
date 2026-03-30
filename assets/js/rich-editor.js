@@ -41,7 +41,35 @@ function renderRichToolbar(renderTo) {
   wrapper.innerHTML = getRichToolbarHTML();
   const toolbar = $(".rich-toolbar", wrapper);
   initRichToolbarEvents(toolbar);
+  initMobileToolbarPin(wrapper);
   return toolbar;
+}
+
+function initMobileToolbarPin(wrapper) {
+  if (!window.visualViewport) {
+    return;
+  }
+
+  function pinAboveKeyboard() {
+    // Only act on mobile (wrapper is fixed via CSS only at <=600px)
+    if (window.innerWidth > 600) {
+      return;
+    }
+    // keyboardHeight = layout viewport - (visual viewport top offset + height)
+    const keyboardHeight = window.innerHeight - window.visualViewport.offsetTop - window.visualViewport.height;
+    wrapper.style.bottom = Math.max(0, Math.round(keyboardHeight)) + "px";
+  }
+
+  function resetPin() {
+    if (window.innerWidth > 600) {
+      return;
+    }
+    wrapper.style.bottom = "";
+  }
+
+  window.visualViewport.addEventListener("resize", pinAboveKeyboard);
+  window.visualViewport.addEventListener("scroll", pinAboveKeyboard);
+  window.addEventListener("resize", resetPin);
 }
 
 function initRichToolbarEvents(toolbar) {
