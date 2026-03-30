@@ -2,6 +2,7 @@
 let previewWindow = null;
 
 function persistFormData(input) {
+  //console.warn("changed field[%o]", input?.name || input?.dataset?.field);
   const formData = getFormValues();
   formData.version = 2;
   localStorage.setItem(STORAGE_KEY, JSON.stringify(formData));
@@ -40,10 +41,10 @@ function resetFormData() {
       localStorage.removeItem(STORAGE_KEY);
       $("form").reset();
       $("#text").value = ""; // text is outside form, so reset separately
-      $$("[data-field]").forEach(editor => {
+      $$(".rich-editor[data-field]").forEach(editor => {
         editor.innerHTML = "";
       });
-      $$("input, [data-field]").forEach(el => {
+      $$("input, .rich-editor[data-field]").forEach(el => {
         el.classList.remove("error");
       });
       $$(".error-message").forEach(msg => msg.remove());
@@ -59,7 +60,7 @@ function updateProgress() {
   let completedSteps = 0;
 
   steps.forEach(step => {
-    const requiredFields = $$("[required], [data-required]", step);
+    const requiredFields = $$("[required], .rich-editor[data-field]", step);
     const stepCompleted = requiredFields.every(field => {
       const value = field.contentEditable === "true" ? field.textContent : field.value || "";
       return value.trim();
@@ -76,7 +77,7 @@ function updateProgress() {
   // Update current step indicator
   let currentStep = 1;
   for (let i = 0; i < steps.length; i++) {
-    const requiredFields = $$("[required], [data-required]", steps[i]);
+    const requiredFields = $$("[required], .rich-editor[data-field]", steps[i]);
     const stepCompleted = requiredFields.every(field => {
       const value = field.contentEditable === "true" ? field.textContent : field.value || "";
       return value.trim();
@@ -94,7 +95,7 @@ function updateProgress() {
 
 // Form validation
 function validateForm() {
-  const requiredFields = $$("[required], [data-required]");
+  const requiredFields = $$("[required], .rich-editor[data-field]");
   let isValid = true;
 
   // Clear previous errors
@@ -355,21 +356,23 @@ function generatePDF() {
 function updatePreviewWindow(input) {
   // TODO - optimize by only sending updated field instead of reloading entire preview
   if (previewWindow && !previewWindow.closed) {
-    console.info("Updating preview window due to field[%o] change:", input.name || input.dataset.field);
+    //console.info("Updating preview window due to field[%o] change:", input.name || input.dataset.field);
     previewWindow.location.reload();
   }
 }
 
 // Event listeners
 document.addEventListener("DOMContentLoaded", function () {
-  renderRichToolbar();
   renderSteps(STEPS);
 
   // Load saved form data
   loadFormData();
 
+  const toolbar = renderRichToolbar("#rich-toolbar-wrapper");
+  initRichEditorsEvents(toolbar);
+
   // Update progress on input and save data
-  const inputs = $$("input[name], [data-field]");
+  const inputs = $$("input[name], .rich-editor[data-field]");
   inputs.forEach(input => {
     input.addEventListener(
       "input",
@@ -379,31 +382,6 @@ document.addEventListener("DOMContentLoaded", function () {
         updatePreviewWindow(input);
       }, 300)
     );
-
-    input.addEventListener("focus", function () {
-      activeEditor = this.dataset.field ? this : null;
-      updateToolbarState();
-    });
-
-    if (input.dataset.field) {
-      input.addEventListener("paste", function (e) {
-        e.preventDefault();
-        document.execCommand("insertHTML", false, getCleanPasteHTML(e.clipboardData));
-        persistFormData(input);
-      });
-
-      input.addEventListener("keydown", function (e) {
-        if (e.key === "Tab") {
-          e.preventDefault();
-          if (e.shiftKey) {
-            document.execCommand("outdent", false, null);
-          } else {
-            document.execCommand("indent", false, null);
-          }
-          persistFormData(input);
-        }
-      });
-    }
 
     input.addEventListener("blur", function () {
       // Clear error state when field has value
@@ -456,9 +434,6 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
   }
-
-  // Initialize rich text toolbar
-  initRichToolbar();
 
   // Initial progress update
   updateProgress();

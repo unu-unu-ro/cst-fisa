@@ -1,22 +1,112 @@
 let activeEditor = null;
 let savedRange = null;
 
-function updateToolbarState() {
-  const stateMap = {
-    bold: "tb-bold",
-    italic: "tb-italic",
-    underline: "tb-underline",
-    insertUnorderedList: "tb-ul",
-    insertOrderedList: "tb-ol"
-  };
-  Object.entries(stateMap).forEach(([cmd, id]) => {
-    const btn = $("#" + id);
-    if (btn) {
-      try {
-        btn.classList.toggle("active", document.queryCommandState(cmd));
-      } catch (e) {}
+// TOOLBAR specific code
+
+function updateToolbarState(toolbar) {
+  $$(`[data-action]`, toolbar).forEach(btn => {
+    try {
+      btn.classList.toggle("active", document.queryCommandState(btn.dataset.action));
+    } catch (e) {}
+  });
+}
+
+function getRichToolbarHTML(id) {
+  return `
+    <div class="rich-toolbar">
+      <button type="button" data-action="bold" title="Îngroșat (Ctrl+B)"><strong>B</strong></button>
+      <button type="button" data-action="italic" title="Cursiv (Ctrl+I)"><em>I</em></button>
+      <button type="button" data-action="underline" title="Subliniat (Ctrl+U)"><u>U</u></button>
+      <div class="toolbar-divider"></div>
+      <label class="toolbar-color-btn" title="Culoare text">
+        <span class="color-swatch tb-forecolor-swatch">A</span>
+        <input type="color" name="foreColorPicker" value="#e74c3c" />
+      </label>
+      <label class="toolbar-color-btn" title="Culoare fundal text">
+        <span class="color-swatch tb-bgcolor-swatch bg-swatch">A</span>
+        <input type="color" name="bgColorPicker" value="#ffff00" />
+      </label>
+      <div class="toolbar-divider"></div>
+      <button type="button" data-action="insertUnorderedList" title="Listă cu puncte">&#x2630;</button>
+      <button type="button" data-action="insertOrderedList" title="Listă numerotată">&#x2116;</button>
+      <div class="toolbar-divider"></div>
+      <button type="button" data-action="outdent" title="Micșorează indentare (Shift+Tab)">&#8676;</button>
+      <button type="button" data-action="indent" title="Mărește indentare (Tab)">&#8677;</button>
+    </div>`;
+}
+
+function renderRichToolbar(renderTo) {
+  const wrapper = $(renderTo);
+  if (!wrapper) return;
+  wrapper.innerHTML = getRichToolbarHTML();
+  const toolbar = $(".rich-toolbar", wrapper);
+  initRichToolbarEvents(toolbar);
+  return toolbar;
+}
+
+function initRichToolbarEvents(toolbar) {
+  const listActions = new Set(["insertUnorderedList", "insertOrderedList"]);
+
+  $$("button[data-action]", toolbar).forEach(btn => {
+    const cmd = btn.dataset.action;
+    btn.addEventListener("mousedown", e => {
+      e.preventDefault();
+      restoreSelection();
+      if (listActions.has(cmd)) {
+        expandSelectionToFullBlocks();
+      }
+      document.execCommand(cmd, false, null);
+      updateToolbarState(toolbar);
+      notifyEditorChange(activeEditor);
+    });
+  });
+
+  $$(".toolbar-color-btn", toolbar).forEach(label => {
+    label.addEventListener("mousedown", () => saveSelection());
+  });
+
+  const foreColorPicker = $("[name='foreColorPicker']", toolbar);
+  if (foreColorPicker) {
+    foreColorPicker.addEventListener("input", e => {
+      restoreSelection();
+      document.execCommand("foreColor", false, e.target.value);
+      const swatch = $(".tb-forecolor-swatch", toolbar);
+      if (swatch) swatch.style.borderBottomColor = e.target.value;
+      notifyEditorChange(activeEditor);
+    });
+  }
+
+  const bgColorPicker = $("[name='bgColorPicker']", toolbar);
+  if (bgColorPicker) {
+    bgColorPicker.addEventListener("input", e => {
+      restoreSelection();
+      if (!document.execCommand("hiliteColor", false, e.target.value)) {
+        document.execCommand("backColor", false, e.target.value);
+      }
+      const swatch = $(".tb-bgcolor-swatch", toolbar);
+      if (swatch) swatch.style.backgroundColor = e.target.value;
+      notifyEditorChange(activeEditor);
+    });
+  }
+
+  document.addEventListener("selectionchange", () => {
+    const sel = window.getSelection();
+    if (sel && sel.rangeCount > 0 && activeEditor) {
+      const range = sel.getRangeAt(0);
+      if (activeEditor.contains(range.commonAncestorContainer)) {
+        savedRange = range.cloneRange();
+        updateToolbarState(toolbar);
+      }
     }
   });
+}
+
+// EDITOR specific code
+
+function notifyEditorChange(editor) {
+  if (!editor) return;
+  const event = new Event("input", { bubbles: true });
+  editor.dispatchEvent(event);
 }
 
 function getCleanPasteHTML(clipboardData) {
@@ -46,7 +136,6 @@ function cleanStyles(el) {
     node.removeAttribute("style");
     if (color) node.style.color = color;
     if (backgroundColor) node.style.backgroundColor = backgroundColor;
-    console.debug("margin", margin);
     if (margin) node.style.margin = margin;
   });
 }
@@ -89,107 +178,31 @@ function expandSelectionToFullBlocks() {
   sel.addRange(range);
 }
 
-function getRichToolbarHTML() {
-  return `
-    <div id="rich-toolbar" class="rich-toolbar">
-      <button type="button" id="tb-bold" title="Îngroșat (Ctrl+B)"><strong>B</strong></button>
-      <button type="button" id="tb-italic" title="Cursiv (Ctrl+I)"><em>I</em></button>
-      <button type="button" id="tb-underline" title="Subliniat (Ctrl+U)"><u>U</u></button>
-      <div class="toolbar-divider"></div>
-      <label class="toolbar-color-btn" title="Culoare text">
-        <span id="tb-forecolor-swatch" class="color-swatch">A</span>
-        <input type="color" id="foreColorPicker" value="#e74c3c" />
-      </label>
-      <label class="toolbar-color-btn" title="Culoare fundal text">
-        <span id="tb-bgcolor-swatch" class="color-swatch bg-swatch">A</span>
-        <input type="color" id="bgColorPicker" value="#ffff00" />
-      </label>
-      <div class="toolbar-divider"></div>
-      <button type="button" id="tb-ul" title="Listă cu puncte">&#x2630;</button>
-      <button type="button" id="tb-ol" title="Listă numerotată">&#x2116;</button>
-      <div class="toolbar-divider"></div>
-      <button type="button" id="tb-outdent" title="Micșorează indentare (Shift+Tab)">&#8676;</button>
-      <button type="button" id="tb-indent" title="Mărește indentare (Tab)">&#8677;</button>
-    </div>`;
-}
+function initRichEditorsEvents(toolbar) {
+  const inputs = $$(".rich-editor[data-field]");
 
-function renderRichToolbar() {
-  const wrapper = $(".rich-toolbar-wrapper");
-  if (!wrapper) return;
-  wrapper.innerHTML = getRichToolbarHTML();
-}
-
-function initRichToolbar() {
-  const simpleCommands = {
-    "tb-bold": "bold",
-    "tb-italic": "italic",
-    "tb-underline": "underline",
-    "tb-indent": "indent",
-    "tb-outdent": "outdent"
-  };
-
-  Object.entries(simpleCommands).forEach(([id, cmd]) => {
-    const btn = $("#" + id);
-    if (!btn) return;
-    btn.addEventListener("mousedown", e => {
-      e.preventDefault();
-      restoreSelection();
-      document.execCommand(cmd, false, null);
-      updateToolbarState();
-      if (activeEditor) persistFormData(activeEditor);
+  inputs.forEach(input => {
+    input.addEventListener("focus", function () {
+      activeEditor = this.dataset.field ? this : null;
+      updateToolbarState(toolbar);
     });
-  });
 
-  ["tb-ul", "tb-ol"].forEach(id => {
-    const btn = $("#" + id);
-    if (!btn) return;
-    const cmd = id === "tb-ul" ? "insertUnorderedList" : "insertOrderedList";
-    btn.addEventListener("mousedown", e => {
-      e.preventDefault();
-      restoreSelection();
-      expandSelectionToFullBlocks();
-      document.execCommand(cmd, false, null);
-      updateToolbarState();
-      if (activeEditor) persistFormData(activeEditor);
-    });
-  });
+    if (input.dataset.field) {
+      input.addEventListener("paste", function (e) {
+        e.preventDefault();
+        document.execCommand("insertHTML", false, getCleanPasteHTML(e.clipboardData));
+      });
 
-  $$(".toolbar-color-btn").forEach(label => {
-    label.addEventListener("mousedown", () => saveSelection());
-  });
-
-  const foreColorPicker = $("#foreColorPicker");
-  if (foreColorPicker) {
-    foreColorPicker.addEventListener("input", e => {
-      restoreSelection();
-      document.execCommand("foreColor", false, e.target.value);
-      const swatch = $("#tb-forecolor-swatch");
-      if (swatch) swatch.style.borderBottomColor = e.target.value;
-      if (activeEditor) persistFormData(activeEditor);
-    });
-  }
-
-  const bgColorPicker = $("#bgColorPicker");
-  if (bgColorPicker) {
-    bgColorPicker.addEventListener("input", e => {
-      restoreSelection();
-      if (!document.execCommand("hiliteColor", false, e.target.value)) {
-        document.execCommand("backColor", false, e.target.value);
-      }
-      const swatch = $("#tb-bgcolor-swatch");
-      if (swatch) swatch.style.backgroundColor = e.target.value;
-      if (activeEditor) persistFormData(activeEditor);
-    });
-  }
-
-  document.addEventListener("selectionchange", () => {
-    const sel = window.getSelection();
-    if (sel && sel.rangeCount > 0 && activeEditor) {
-      const range = sel.getRangeAt(0);
-      if (activeEditor.contains(range.commonAncestorContainer)) {
-        savedRange = range.cloneRange();
-        updateToolbarState();
-      }
+      input.addEventListener("keydown", function (e) {
+        if (e.key === "Tab") {
+          e.preventDefault();
+          if (e.shiftKey) {
+            document.execCommand("outdent", false, null);
+          } else {
+            document.execCommand("indent", false, null);
+          }
+        }
+      });
     }
   });
 }

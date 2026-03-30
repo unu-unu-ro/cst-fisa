@@ -4,7 +4,7 @@ function renderPreview(steps, values) {
   const emptyAns = '<span class="empty-answer">Nu a fost completat</span>';
 
   let html = `
-    <div class="extra-row">
+    <div id="header-fields" class="extra-row">
       <span class="extra-label">Nume:</span>
       <span class="extra-value">${values["nume"] || emptyAns}</span>
       <span class="extra-label">Text:</span>

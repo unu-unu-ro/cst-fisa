@@ -42,9 +42,13 @@ function getFormValues() {
   $$("input[name]").forEach(input => {
     data[input.name] = input.value;
   });
-  $$("[data-field]").forEach(editor => {
-    const html = editor.innerHTML;
-    data[editor.dataset.field] = html === "<br>" ? "" : html;
+  $$(".rich-editor[data-field]").forEach(editor => {
+    let html = editor.innerHTML.trim();
+    // '<p><br></p>' => empty content, so treat it as empty string
+    if (html === "<p><br></p>" || html === "<br>") {
+      html = "";
+    }
+    data[editor.dataset.field] = html;
   });
   return data;
 }
@@ -56,7 +60,7 @@ function setFormValues(data) {
       input.value = data[name] || "";
       return;
     }
-    const editor = $(`[data-field="${name}"]`);
+    const editor = $(`.rich-editor[data-field="${name}"]`);
     if (editor) {
       editor.innerHTML = window.DOMPurify.sanitize(data[name] || "");
     }
