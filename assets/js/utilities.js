@@ -44,8 +44,7 @@ function getFormValues() {
   });
   $$(".rich-editor[data-field]").forEach(editor => {
     let html = editor.innerHTML.trim();
-    // '<p><br></p>' => empty content, so treat it as empty string
-    if (html === "<p><br></p>" || html === "<br>") {
+    if (!html || html === "<p><br></p>" || html === "<br>" || editor.innerText.trim() === "") {
       html = "";
     }
     data[editor.dataset.field] = html;

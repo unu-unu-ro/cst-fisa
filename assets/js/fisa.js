@@ -299,7 +299,7 @@ function renderSteps(steps) {
           const field =
             q.type === "text"
               ? `<input type="text" id="${q.field}" name="${q.field}"${required}${phAttr} class="form-group-input" />`
-              : `<div class="rich-editor${q.cls ? " " + q.cls : ""}" id="${q.field}" data-field="${q.field}"${q.required ? ' data-required="true"' : ""}${phData} contenteditable="true"></div>`;
+              : `<div class="rich-editor${q.cls ? " " + q.cls : ""}" id="${q.field}" data-field="${q.field}"${q.required ? ' data-required="true"' : ""}${phData} contenteditable="true" autocorrect="off"></div>`;
           return `
         <div class="form-group">
           <label for="${q.field}">

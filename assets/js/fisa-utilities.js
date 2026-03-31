@@ -108,8 +108,8 @@ const STEPS = [
         label: "Care este titlul predicii tale?",
         field: "titlu-predica",
         placeholder: "Un titlu clar și captivant pentru predica ta",
-        required: true,
-        type: "text"
+        required: true
+        //type: "text"
       },
       {
         label: "Cum arată schița mesajului?",

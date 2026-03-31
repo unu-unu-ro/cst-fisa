@@ -52,10 +52,12 @@ Pentru mai multe detalii despre metoda de lucru și ghidul complet, vizitați: [
 
 - [ ] When save pdf also save the raw json file.
 - [ ] when users tries to print the page, show a message that they should use the "Save PDF" button instead. Or better redirect them to the print preview page with auto download of the pdf. (Auto-print if `?print=1` is in the URL)
+- [ ] apply theme to the index.html page, not only the print preview.
 - [ ] Rich Text Toolbar improvements:
   - [ ] reuse 'Rich Text Toolbar' into the print preview page, so users can edit the content there as well.
   - [ ] button for handling clear formatting of the text (remove all styles but keep the text content and line breaks)
   - [ ] copy/paste formatting
+  - [ ] when pressing Tab key inside the rich editor and we are at the end of the line, move focus to the next element instead of indenting the text
 - [ ] Mobile improvements:
   - [ ] on mobile when focus in a contenteditable field toolbar is moved to upper and not visible.
   - [ ] disable some autocomplete features like autocomplete with card details, or address autocomplete, which are not relevant for this form and can cause issues on mobile.

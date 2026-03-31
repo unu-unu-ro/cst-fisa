@@ -83,7 +83,7 @@
 
 .rich-editor {
   width: 100%;
-  min-height: 80px;
+  min-height: 40px;
   padding: 0.5rem;
   border: 1px solid var(--border-color);
   border-radius: 5px;
@@ -99,7 +99,7 @@
 }
 
 .rich-editor.large {
-  min-height: 100px;
+  min-height: 80px;
 }
 
 .rich-editor:focus {
