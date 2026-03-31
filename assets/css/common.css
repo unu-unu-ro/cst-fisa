@@ -29,7 +29,6 @@ body {
   position: sticky;
   top: 0;
   z-index: 100;
-  /* background: #fff; */
   padding-bottom: 0.75rem;
 }
 /* first half white */
@@ -51,7 +50,6 @@ body {
 .step h3 {
   font-family: var(--font-heading);
   color: var(--primary-dark);
-  /* text-transform: uppercase; */
   margin-bottom: 0.7rem;
   font-weight: 700;
   letter-spacing: 1px;
@@ -60,7 +58,6 @@ body {
 }
 
 .step h3 .note {
-  /* text-transform: none; */
   font-weight: normal;
 }
 
