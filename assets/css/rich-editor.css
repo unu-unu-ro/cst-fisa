@@ -102,6 +102,10 @@
   min-height: 80px;
 }
 
+.rich-editor:hover {
+  border-color: var(--primary-accent-light);
+  box-shadow: 0 0 0 3px rgba(0, 90, 91, 0.05);
+}
 .rich-editor:focus {
   border-color: var(--primary-accent);
   box-shadow: 0 0 0 3px rgba(0, 90, 91, 0.1);

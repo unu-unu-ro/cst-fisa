@@ -80,6 +80,10 @@
     box-shadow 0.3s ease;
 }
 
+.form-group input[type="text"]:hover {
+  border-color: var(--primary-accent-light);
+  box-shadow: 0 0 0 3px rgba(0, 90, 91, 0.05);
+}
 .form-group input[type="text"]:focus {
   outline: none;
   border-color: var(--primary-accent);
