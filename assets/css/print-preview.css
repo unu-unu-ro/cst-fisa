@@ -207,6 +207,9 @@ body {
 /* === === === === === === */
 
 @media print {
+  .empty-answer {
+    visibility: hidden;
+  }
   body {
     font-size: 10pt;
     line-height: 1.3;
