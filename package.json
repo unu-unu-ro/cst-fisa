@@ -32,11 +32,11 @@
     "postinstall": "npm run copy-libs"
   },
   "dependencies": {
-    "dompurify": "^3.3.3",
-    "marked": "^17.0.5"
+    "dompurify": "^3.4.2",
+    "marked": "^18.0.2"
   },
   "devDependencies": {
-    "browser-sync": "^3.0.2",
+    "browser-sync": "^3.0.4",
     "run-script-os": "^1.1.6"
   }
 }
