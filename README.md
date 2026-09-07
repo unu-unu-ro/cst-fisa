@@ -62,3 +62,12 @@ Pentru mai multe detalii despre metoda de lucru și ghidul complet, vizitați: [
   - [ ] on mobile when focus in a contenteditable field toolbar is moved to upper and not visible.
   - [ ] disable some autocomplete features like autocomplete with card details, or address autocomplete, which are not relevant for this form and can cause issues on mobile.
 - [ ] add a "Personal Notes" section at the end of the form, for users to add any additional thoughts or comments that don't fit into the structured steps - this will be stored in the storage and json but not shown in the print-preview/pdf.
+
+- [ ] after import json re-validated fields and show/hide errors if some required fields are missing or if the json structure is invalid.
+- [ ] Remove enters at the end of the text fields when printing to avoid extra spaces in the pdf.
+- [ ] print preview improvements:
+  - [ ] page size should be A4 to have a similar layout with the printed version.
+  - [ ] suggest possile page breaks in the print preview, so users can adjust the content to fit better on pages when printed. Simulate page breaks in the print preview by adding a dashed line or some visual indicator where the page break would occur based on the content height and the A4 page size.
+  - [ ] after we calculate that the content exceeds 2 pages, show a warning message in the print preview...
+  - [ ] in main page we could also show a warning if the content is too long and will exceed 2 pages when printed, so users can adjust it before going to print preview. We can calculate this by creating a hidden element with the same content and styles as the print preview, and check its height to determine if it exceeds the limit for 2 pages (iframe with soma classes to have the same styles as the print preview page, and then check the scrollHeight of the content).
+  - [ ] "într-o singură propoziție scurtă" - could be hidden in the print preview, and only show it in the main page, since it's more of a guidance for users when filling the form, and not necessary for the printed version. (included in step 3 and 5)
