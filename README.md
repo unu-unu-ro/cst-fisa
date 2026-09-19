@@ -50,6 +50,7 @@ Pentru mai multe detalii despre metoda de lucru și ghidul complet, vizitați: [
 
 ## Contribuții & Dev notes
 
+- [ ] Split point 4 into individual sub-points. (Legătura cu Evanghelia)
 - [ ] When save pdf also save the raw json file.
 - [ ] when users tries to print the page, show a message that they should use the "Save PDF" button instead. Or better redirect them to the print preview page with auto download of the pdf. (Auto-print if `?print=1` is in the URL)
 - [ ] apply theme to the index.html page, not only the print preview.
