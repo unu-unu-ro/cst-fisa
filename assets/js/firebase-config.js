@@ -11,7 +11,7 @@
  * accesul la date este protejat de regulile Firestore.
  */
 window.FIREBASE_CONFIG = {
-apiKey: "AIzaSyAmYuDhesnUK5Y72Ydy3FPDOjAJ7lulWzY",
+  apiKey: "AIzaSyAmYuDhesnUK5Y72Ydy3FPDOjAJ7lulWzY",
   authDomain: "cst-fisa.firebaseapp.com",
   projectId: "cst-fisa",
   storageBucket: "cst-fisa.firebasestorage.app",

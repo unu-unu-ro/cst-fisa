@@ -161,7 +161,7 @@
     align-self: start;
   }
   .step > .step__body {
-    grid-column: 6 / span 7;
+    grid-column: 5 / span 8;
   }
 }
 .step__head {
