@@ -4,69 +4,102 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <title>Fișa interactivă — Ateliere de predicare expozitivă</title>
+    <meta
+      name="description"
+      content="Completează online cei 7 pași ai fișei de lucru Charles Simeon Trust, salvează-ți fișele în cont și generează PDF-ul gata de tipărit."
+    />
+    <meta name="theme-color" content="#1848A8" />
 
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@500;700&family=Work+Sans:wght@300;400;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Source+Sans+3:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="assets/css/common.css" />
-    <link rel="stylesheet" href="assets/css/rich-editor.css" />
-    <link rel="stylesheet" href="assets/css/style.css" />
-    <link rel="stylesheet" href="assets/css/fisa.css" />
-    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <link rel="stylesheet" href="assets/css/common.css?v=20261015c" />
+    <link rel="stylesheet" href="assets/css/rich-editor.css?v=20261015c" />
+    <link rel="stylesheet" href="assets/css/style.css?v=20261015c" />
+    <link rel="stylesheet" href="assets/css/fisa.css?v=20261015c" />
+    <link rel="stylesheet" href="assets/css/cloud.css?v=20261015c" />
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+    <link rel="shortcut icon" href="assets/favicon.ico" />
   </head>
 
   <body>
-    <a href="https://predicare-expozitiva.ro/" class="header-link">
-      <header>
-        <h1>Ateliere de predicare expozitivă</h1>
-        <p>Formular Fișă de lucru — Completează online cei 7 pași</p>
-      </header>
-    </a>
+    <header class="site-header">
+      <div class="container-site site-header__inner">
+        <a href="https://predicare-expozitiva.ro/" class="wordmark" title="Predicare expozitivă">
+          <svg aria-hidden="true" width="28" height="28" viewBox="0 0 28 28">
+            <rect x="4" y="2" width="20" height="3" fill="#C9683F" />
+            <rect x="8" y="7.5" width="14" height="3" fill="#1848A8" />
+            <rect x="4" y="13" width="18" height="3" fill="#1848A8" />
+            <rect x="8" y="18.5" width="11" height="3" fill="#1848A8" />
+            <rect x="4" y="24" width="20" height="3" fill="#1848A8" />
+          </svg>
+          <span>Predicare expozitivă</span>
+        </a>
 
-    <div class="form-container">
-      <section class="intro">
-        <p>
-          <strong>Instrucțiuni:</strong> Completează toate câmpurile pentru fiecare dintre cei 7 pași. La sfârșitul
-          formularului vei putea genera un PDF cu răspunsurile tale, formatat conform fișei originale:
-          <a href="assets/downloads/2026 Fișă de lucru CST.docx" target="_blank" title="⬇ Download"
-            >2026 Fișă de lucru CST.docx</a
-          >.
-        </p>
-        <p>
-          Pentru lămuriri despre fiecare pas, vizitează
-          <a href="https://predicare-expozitiva.ro/ghid" target="_blank">ghidul de pregătire</a>.
-        </p>
-      </section>
+        <nav class="site-nav" aria-label="Navigare">
+          <button type="button" id="openInstructions" class="site-nav__btn">Instrucțiuni</button>
+          <a href="https://predicare-expozitiva.ro/ghid" target="_blank" rel="noopener">Ghid</a>
+        </nav>
 
-      <div class="progress-indicator">
-        <div class="progress-bar">
-          <div class="progress-fill" id="progressFill"></div>
-        </div>
-        <div class="step-counter">
-          Progres fișa curentă - pasul <span id="currentStep">1</span> din 7
-          <button type="button" id="openFormattingHelp" class="info-btn" title="Ghid de formatare">i</button>
-        </div>
-        <button type="button" id="resetForm" class="simple-btn">Resetează câmpuri</button>
-        <span class="separator">|</span>
-        <button
-          type="button"
-          id="loadJson"
-          class="simple-btn"
-          title="Încarcă datele dintr-un fișier raw.json salvat anterior"
-        >
-          ⬆ Încarcă din raw.json
-        </button>
-        <span class="separator">|</span>
-        <button
-          type="button"
-          id="downloadJson"
-          class="simple-btn"
-          title="Descarcă datele în format raw.json pentru editări ulterioare"
-        >
-          ⬇ Descarcă raw.json
-        </button>
+        <div id="user-panel" class="user-panel" aria-live="polite"></div>
       </div>
+    </header>
+
+    <section class="page-header">
+      <div class="container-site page-header__grid">
+        <div class="page-header__title">
+          <p class="kicker">Resurse · Fișa interactivă</p>
+          <h1>Fișa de lucru pentru pregătirea predicii</h1>
+          <span class="copper-rule"></span>
+        </div>
+        <p class="page-header__intro">
+          Completează online cei 7 pași ai metodei Charles Simeon Trust, salvează-ți lucrul în cont și generează fișa
+          gata de tipărit.
+        </p>
+      </div>
+    </section>
+
+    <main class="container-site fisa-main">
+
+      <div class="workbar">
+        <div class="workbar__progress">
+          <div class="workbar__counter">
+            <span class="num-label">Progres</span>
+            <span>pasul <span id="currentStep">1</span> din 7</span>
+            <button type="button" id="openFormattingHelp" class="info-btn" title="Ghid de formatare" aria-label="Ghid de formatare">
+              i
+            </button>
+          </div>
+          <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="7" aria-valuenow="0">
+            <div class="progress-fill" id="progressFill"></div>
+          </div>
+        </div>
+        <div class="workbar__tools">
+          <button type="button" id="resetForm" class="simple-btn" title="Golește toate câmpurile">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M3 6h18" /><path d="M8 6V4h8v2" /><path d="M19 6l-1 14H6L5 6" /><path d="M10 11v6M14 11v6" />
+            </svg>
+            Resetează câmpurile
+          </button>
+          <button type="button" id="loadJson" class="simple-btn" title="Încarcă datele dintr-un fișier raw.json salvat anterior">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M12 3v12" /><path d="M7 8l5-5 5 5" /><path d="M4 21h16" />
+            </svg>
+            Încarcă raw.json
+          </button>
+          <button type="button" id="downloadJson" class="simple-btn" title="Descarcă datele în format raw.json pentru editări ulterioare">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M12 3v12" /><path d="M7 10l5 5 5-5" /><path d="M4 21h16" />
+            </svg>
+            Descarcă raw.json
+          </button>
+        </div>
+      </div>
+
+      <div id="cloud-status" class="cloud-status is-local"></div>
 
       <div id="header-fields" class="extra-fields">
         <div class="form-group">
@@ -102,7 +135,7 @@
             maxlength="64"
             placeholder="Publicul țintă al predicii"
             class="form-group-input"
-            autocomplete="public"
+            autocomplete="off"
           />
         </div>
       </div>
@@ -111,37 +144,113 @@
 
       <form id="fisaForm" autocomplete="off" data-form-type="other">
         <div id="cst-steps"></div>
+
+        <section class="step step--notes" id="step-notes">
+          <div class="step__head">
+            <p class="num-label">Note personale</p>
+            <h3>Gânduri, întrebări, idei de urmărit</h3>
+            <div class="hint">
+              Spațiu liber pentru ce nu încape în cei 7 pași. Se salvează odată cu fișa, dar
+              <strong>nu apare în PDF</strong> și nici în pagina publică.
+            </div>
+          </div>
+          <div class="step__body">
+            <div class="form-group">
+              <label for="note-personale">Notițe</label>
+              <div
+                class="rich-editor large"
+                id="note-personale"
+                data-field="note-personale"
+                data-optional="true"
+                data-placeholder="Ex: de verificat comentariul lui Carson la v. 12 / întrebare pentru grup / idee de ilustrație"
+                contenteditable="true"
+                autocorrect="off"
+                role="textbox"
+                aria-multiline="true"
+              ></div>
+            </div>
+          </div>
+        </section>
         <div class="form-actions">
-          <button type="button" id="generatePDF" class="btn-primary">
-            <svg
-              width="24px"
-              height="24px"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              style="margin-right: 8px"
-            >
-              <path
-                d="M17 17H19C20.1046 17 21 16.1046 21 15V11C21 9.89543 20.1046 9 19 9H5C3.89543 9 3 9.89543 3 11V15C3 16.1046 3.89543 17 5 17H7M17 17H7M17 17V21H7V17M17 9V5C17 3.89543 16.1046 3 15 3H9C7.89543 3 7 3.89543 7 5V9M12 17V17.01"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-            </svg>
-            Previzualizare PDF
-          </button>
+          <div class="form-actions__text">
+            <h3>Gata de tipărit?</h3>
+            <p>Previzualizarea deschide fișa în formatul oficial, pregătită pentru salvare ca PDF sau imprimare.</p>
+          </div>
+          <div class="form-actions__buttons">
+            <button type="button" id="generatePDF" class="btn btn-primary btn-lg">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M6 9V3h12v6" /><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2" /><path d="M6 14h12v7H6z" />
+              </svg>
+              Previzualizare PDF
+            </button>
+          </div>
         </div>
       </form>
+    </main>
+
+    <!-- Instructions Modal -->
+    <div id="instructionsModal" class="modal" style="display: none">
+      <div class="modal-overlay">
+        <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="instructionsTitle">
+          <div class="modal-header">
+            <h3 id="instructionsTitle">Instrucțiuni</h3>
+            <button type="button" id="closeInstructions" class="close-modal" aria-label="Închide">&times;</button>
+          </div>
+          <div class="modal-body modal-body--prose">
+            <p>
+              Completează câmpurile pentru fiecare dintre cei 7 pași. La final poți genera un PDF cu răspunsurile tale,
+              formatat conform fișei originale:
+              <a href="assets/downloads/2026 Fișă de lucru CST.docx" target="_blank" title="Descarcă"
+                >2026 Fișă de lucru CST.docx</a
+              >.
+            </p>
+            <p>
+              Pentru lămuriri despre fiecare pas, vezi
+              <a href="https://predicare-expozitiva.ro/ghid" target="_blank" rel="noopener">ghidul de pregătire</a>.
+            </p>
+            <p>
+              Datele sunt salvate automat în browser. Conectează-te cu Google ca să le păstrezi în cont și să revii la
+              ele de pe orice dispozitiv.
+            </p>
+            <ul class="help-list">
+              <li>
+                <strong>Cont Google</strong> &mdash; din butonul „Conectare cu Google” (dreapta sus). Fișele se salvează
+                automat în cont la fiecare modificare, fără niciun buton de salvare.
+              </li>
+              <li>
+                <strong>Fișele mele</strong> &mdash; din meniul contului sau din banda de stare. Poți deschide o fișă
+                mai veche, o poți duplica pentru un pasaj nou, descărca ca JSON sau șterge.
+              </li>
+              <li>
+                <strong>Partajare prin link</strong> &mdash; „Partajează” face fișa publică și îți dă un link pe care
+                îl poți trimite colegilor de grup. Ei o văd în format de tipărire, fără cont. Poți opri partajarea
+                oricând.
+              </li>
+              <li>
+                <strong>Formatare</strong> &mdash; bara de deasupra pașilor oferă îngroșat, cursiv, liste și culori.
+                Butonul <em>i</em> de lângă progres explică fiecare opțiune.
+              </li>
+              <li>
+                <strong>Previzualizare PDF</strong> &mdash; butonul de la finalul formularului deschide fișa în formatul
+                oficial, de unde o poți salva ca PDF sau tipări.
+              </li>
+              <li>
+                <strong>Backup fără cont</strong> &mdash; „Descarcă raw.json” salvează un fișier pe calculator, iar
+                „Încarcă raw.json” îl readuce în formular, pe orice dispozitiv.
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- Formatting Help Modal -->
     <div id="formattingHelpModal" class="modal" style="display: none">
       <div class="modal-overlay">
-        <div class="modal-content">
+        <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="formattingHelpTitle">
           <div class="modal-header">
-            <h3>Ajutor Formatare</h3>
-            <button type="button" id="closeFormattingHelp" class="close-modal">&times;</button>
+            <h3 id="formattingHelpTitle">Ajutor formatare</h3>
+            <button type="button" id="closeFormattingHelp" class="close-modal" aria-label="Închide">&times;</button>
           </div>
           <div class="modal-body">
             <p>
@@ -161,22 +270,58 @@
               <li>&#x2116; &mdash; Adaugă o listă numerotată</li>
               <li>&#8676; / &#8677; &mdash; Micșorează / Mărește indentarea</li>
             </ul>
-            <p style="margin-top: 0.75rem; font-size: 0.85rem; color: var(--text-secondary)">
-              Formatarea se salvează automat și apare în previzualizarea PDF.
-            </p>
+            <p class="small">Formatarea se salvează automat și apare în previzualizarea PDF.</p>
           </div>
         </div>
       </div>
     </div>
 
-    <footer>
-      <div class="footer-text">
-        <div class="date">
-          Completat cu <a href="https://fisa.predicare-expozitiva.ro" target="_blank">fisa.predicare-expozitiva.ro</a>
+    <!-- Panoul „Fișele mele” (populat din cloud.js) -->
+    <div id="fise-drawer-backdrop" class="drawer-backdrop"></div>
+    <aside id="fise-drawer" class="drawer" aria-hidden="true" aria-labelledby="fiseDrawerTitle"></aside>
+
+    <footer class="site-footer">
+      <div class="container-site site-footer__inner">
+        <div class="site-footer__grid">
+          <div class="site-footer__brand">
+            <div class="site-footer__brand-row">
+              <svg aria-hidden="true" width="26" height="26" viewBox="0 0 28 28">
+                <rect x="4" y="2" width="20" height="3" fill="#E8A27A" />
+                <rect x="8" y="7.5" width="14" height="3" fill="#FFFFFF" />
+                <rect x="4" y="13" width="18" height="3" fill="#FFFFFF" />
+                <rect x="8" y="18.5" width="11" height="3" fill="#FFFFFF" />
+                <rect x="4" y="24" width="20" height="3" fill="#FFFFFF" />
+              </svg>
+              <p>Ateliere de predicare expozitivă</p>
+            </div>
+            <p>
+              În parteneriat cu Charles Simeon Trust, formăm următoarea generație de predicatori expozitivi în România.
+            </p>
+          </div>
+          <div class="site-footer__col">
+            <p class="kicker">Navigare</p>
+            <a href="https://predicare-expozitiva.ro/evenimente">Evenimente</a>
+            <a href="https://predicare-expozitiva.ro/resurse">Resurse</a>
+            <a href="https://predicare-expozitiva.ro/ghid">Ghid de pregătire</a>
+            <a href="https://predicare-expozitiva.ro/despre">Despre</a>
+            <a href="https://predicare-expozitiva.ro/contact">Contact</a>
+          </div>
+          <div class="site-footer__col">
+            <p class="kicker">Parteneri</p>
+            <a href="https://simeontrust.org/" target="_blank" rel="noopener noreferrer">Charles Simeon Trust</a>
+            <a href="https://unu-unu.ro" target="_blank" rel="noopener noreferrer">Biserica Unu Unu, Cluj</a>
+            <a href="https://www.facebook.com/sfantatreimebraila" target="_blank" rel="noopener noreferrer"
+              >Biserica Sfânta Treime, Brăila</a
+            >
+          </div>
         </div>
-        <div class="copyright">Charles Simeon Trust &copy; 2026</div>
+        <div class="site-footer__bottom">
+          <span>© <span id="footerYear">2026</span> Ateliere de predicare expozitivă · Fișa de lucru © Charles Simeon Trust</span>
+          <span>
+            Completat cu <a href="https://fisa.predicare-expozitiva.ro">fisa.predicare-expozitiva.ro</a>
+          </span>
+        </div>
       </div>
-      <img src="https://cst-media.s3.amazonaws.com/graphic/cst-logo-black-web.jpg" alt="CST Logo" />
     </footer>
 
     <!-- External Libs -->
@@ -184,9 +329,13 @@
     <script src="assets/external/dompurify.min.js"></script>
 
     <!-- App Scripts -->
-    <script src="assets/js/utilities.js"></script>
-    <script src="assets/js/fisa-utilities.js"></script>
-    <script src="assets/js/rich-editor.js"></script>
-    <script src="assets/js/fisa.js"></script>
+    <script src="assets/js/utilities.js?v=20261015c"></script>
+    <script src="assets/js/fisa-utilities.js?v=20261015c"></script>
+    <script src="assets/js/rich-editor.js?v=20261015c"></script>
+    <script src="assets/js/fisa.js?v=20261015c"></script>
+
+    <!-- Cont Google + Firestore (opțional; se activează după completarea firebase-config.js) -->
+    <script src="assets/js/firebase-config.js?v=20261015c"></script>
+    <script type="module" src="assets/js/cloud.js?v=20261015c"></script>
   </body>
 </html>

@@ -32,6 +32,10 @@ function getRichToolbarHTML(id) {
       <div class="toolbar-divider"></div>
       <button type="button" data-action="outdent" title="Micșorează indentare (Shift+Tab)">&#8676;</button>
       <button type="button" data-action="indent" title="Mărește indentare (Tab)">&#8677;</button>
+      <div class="toolbar-divider"></div>
+      <button type="button" data-action="removeFormat" class="tb-clear" title="Șterge formatarea (păstrează textul)">
+        <span>T</span><s>x</s>
+      </button>
     </div>`;
 }
 
@@ -54,6 +58,12 @@ function initRichToolbarEvents(toolbar) {
       restoreSelection();
       if (listActions.has(cmd)) {
         expandSelectionToFullBlocks();
+      }
+      if (cmd === "removeFormat") {
+        clearFormatting();
+        updateToolbarState(toolbar);
+        notifyEditorChange(activeEditor);
+        return;
       }
       document.execCommand(cmd, false, null);
       updateToolbarState(toolbar);
@@ -137,6 +147,30 @@ function cleanStyles(el) {
     if (color) node.style.color = color;
     if (backgroundColor) node.style.backgroundColor = backgroundColor;
     if (margin) node.style.margin = margin;
+  });
+}
+
+// Șterge formatarea inline (bold, culori, fundal…) din selecție; fără selecție, din tot câmpul.
+function clearFormatting() {
+  if (!activeEditor) return;
+  const sel = window.getSelection();
+  if (!sel || sel.rangeCount === 0 || sel.isCollapsed) {
+    const range = document.createRange();
+    range.selectNodeContents(activeEditor);
+    sel.removeAllRanges();
+    sel.addRange(range);
+  }
+  document.execCommand("removeFormat", false, null);
+  document.execCommand("unlink", false, null);
+  // removeFormat lasă uneori stilurile pe span-uri; le curățăm explicit.
+  activeEditor.querySelectorAll("[style], font").forEach(node => {
+    if (node.tagName === "FONT") {
+      const parent = node.parentNode;
+      while (node.firstChild) parent.insertBefore(node.firstChild, node);
+      parent.removeChild(node);
+    } else {
+      node.removeAttribute("style");
+    }
   });
 }
 

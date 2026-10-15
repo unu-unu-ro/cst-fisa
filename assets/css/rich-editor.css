@@ -2,52 +2,62 @@
   display: flex;
   align-items: center;
   gap: 2px;
-  padding: 0.35rem 0.5rem;
-  background: var(--background-off-white);
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
+  padding: 6px 8px;
+  background: var(--ice);
+  border: 1px solid var(--ice-line);
+  border-radius: var(--radius);
   flex-wrap: wrap;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
 }
 
 .rich-toolbar button,
 .rich-toolbar .toolbar-color-btn {
   background: none;
   border: 1px solid transparent;
-  border-radius: 4px;
-  padding: 0.2rem 0.45rem;
+  border-radius: var(--radius);
+  padding: 0 8px;
   cursor: pointer;
   font-family: var(--font-body);
-  font-size: 0.9rem;
-  color: var(--text-primary);
+  font-size: 15px;
+  color: var(--ink);
   transition:
     background 0.15s,
     border-color 0.15s;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 30px;
-  height: 30px;
+  min-width: 32px;
+  height: 32px;
   user-select: none;
   -webkit-user-select: none;
-  font-weight: bold;
+  font-weight: 700;
 }
 
 .rich-toolbar button:hover,
 .rich-toolbar .toolbar-color-btn:hover {
-  background: #e8e8e8;
-  border-color: var(--border-color);
+  background: #fff;
+  border-color: var(--ice-line);
 }
 
 .rich-toolbar button.active {
-  background: #d3e3fd;
-  border-color: #d3e3fd;
+  background: var(--royal-pale);
+  border-color: var(--royal-light);
+  color: var(--royal-deep);
+}
+
+.rich-toolbar .tb-clear {
+  gap: 0;
+  font-size: 14px;
+}
+.rich-toolbar .tb-clear s {
+  font-size: 11px;
+  color: var(--destructive);
+  text-decoration-color: var(--destructive);
 }
 
 .toolbar-divider {
   width: 1px;
   height: 20px;
-  background: var(--border-color);
+  background: var(--ice-line);
   margin: 0 4px;
   flex-shrink: 0;
 }
@@ -69,7 +79,7 @@
 
 .color-swatch {
   font-weight: 700;
-  font-size: 1rem;
+  font-size: 16px;
   line-height: 1;
   padding: 0 3px;
   border-bottom: 3px solid #e74c3c;
@@ -83,15 +93,18 @@
 
 .rich-editor {
   width: 100%;
-  min-height: 40px;
-  padding: 0.5rem;
-  border: 1px solid var(--border-color);
-  border-radius: 5px;
+  min-height: 48px;
+  padding: 10px 12px;
+  border: 1px solid var(--ice-line);
+  border-radius: var(--radius);
   font-family: var(--font-body);
-  background-color: var(--background-light);
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--ink);
+  background-color: #fff;
   transition:
-    border-color 0.3s ease,
-    box-shadow 0.3s ease;
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
   outline: none;
   overflow: auto;
   box-sizing: border-box;
@@ -99,21 +112,20 @@
 }
 
 .rich-editor.large {
-  min-height: 80px;
+  min-height: 96px;
 }
 
 .rich-editor:hover {
-  border-color: var(--primary-accent-light);
-  box-shadow: 0 0 0 3px rgba(0, 90, 91, 0.05);
+  border-color: var(--royal-soft);
 }
 .rich-editor:focus {
-  border-color: var(--primary-accent);
-  box-shadow: 0 0 0 3px rgba(0, 90, 91, 0.1);
+  border-color: var(--royal);
+  box-shadow: 0 0 0 3px rgba(24, 72, 168, 0.15);
 }
 
 .rich-editor:empty::before {
   content: attr(data-placeholder);
-  color: #aaa;
+  color: #8e97aa;
   pointer-events: none;
   display: block;
 }
@@ -127,10 +139,4 @@
   font-size: inherit;
   font-family: inherit;
   line-height: inherit;
-}
-
-@media (max-width: 768px) {
-  .rich-editor {
-    font-size: 16px;
-  }
 }

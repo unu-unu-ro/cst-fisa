@@ -15,7 +15,7 @@ body {
   align-items: center;
   text-align: center;
   margin-bottom: 1.5rem;
-  border-bottom: 1px solid #005a5b;
+  border-bottom: 1px solid var(--royal);
   padding-bottom: 0.8rem;
   padding-left: 60px;
 }
@@ -23,7 +23,7 @@ body {
   flex: 1;
 }
 .header h1 {
-  color: #2a3f54;
+  color: var(--ink);
   font-size: 1.2rem;
   margin: 0 0 0.3rem 0;
   letter-spacing: 1px;
@@ -38,7 +38,7 @@ body {
 }
 
 a {
-  color: #005a5b;
+  color: var(--royal);
   text-decoration: none;
 }
 a:hover {
@@ -68,7 +68,7 @@ li {
 }
 .extra-row .extra-label {
   font-weight: bold;
-  color: #2a3f54;
+  color: var(--ink);
 }
 .extra-row .extra-value {
   /* flex: 1; */
@@ -76,7 +76,7 @@ li {
   color: #333;
   font-style: normal;
   text-align: center;
-  border-bottom: 1px solid #005a5b36;
+  border-bottom: 1px solid rgba(24, 72, 168, 0.25);
 }
 
 .step h3 {
@@ -95,7 +95,7 @@ li {
 .answer {
   background: #f9f9f9;
   padding: 0.5rem;
-  border-left: 2px solid #005a5b;
+  border-left: 2px solid var(--royal);
   margin-bottom: 0.6rem;
   font-size: 0.9rem;
 }
@@ -144,15 +144,15 @@ body {
   font-family: Arial, sans-serif;
 }
 .btn-print {
-  background: #005a5b;
+  background: var(--royal);
   color: #fff;
 }
 .btn-print:hover {
-  background: #00474a;
+  background: var(--royal-deep);
 }
 .btn-back {
   background: #e9ecef;
-  color: #2a3f54;
+  color: var(--ink);
 }
 .btn-back:hover {
   background: #d3d8de;
@@ -165,10 +165,10 @@ body {
   color: #555;
 }
 #toggle-themes.theme-black {
-  color: #2a3f54;
+  color: var(--ink);
 }
 #toggle-themes.theme-black:hover {
-  color: #1e2e3d;
+  color: var(--royal);
 }
 .theme-red .question-label {
   color: #c00000;
@@ -250,5 +250,138 @@ body {
     /* position: fixed; */
     /* bottom: 0; */
     /* left: 0; */
+  }
+}
+
+/* === Structura pașilor și footerul (mutate din common.css) === */
+.step {
+  margin-bottom: 1rem;
+}
+.step h3 {
+  font-family: var(--font-display);
+  color: var(--ink);
+  margin-bottom: 0.7rem;
+  font-weight: 600;
+  padding-bottom: 0.3rem;
+  border-bottom: 2px solid var(--royal);
+}
+.header h1,
+.header p {
+  font-family: var(--font-display);
+}
+.header p {
+  font-weight: 600;
+  letter-spacing: 0.08em;
+}
+
+footer {
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 5px 15px 15px 95px;
+}
+footer .date {
+  font-size: 0.7rem;
+  color: var(--ink-3);
+}
+footer .footer-text {
+  flex: 1;
+  font-size: 0.8rem;
+  text-align: center;
+  color: var(--ink);
+}
+footer .footer-text .copyright {
+  font-variant: small-caps;
+}
+footer img {
+  height: 36px;
+}
+
+/* Toolbar în stilul site-ului */
+.toolbar button {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 15px;
+  height: 40px;
+  padding: 0 18px;
+  border-radius: var(--radius);
+  border: 1px solid transparent;
+}
+.btn-print {
+  background: var(--royal);
+}
+.btn-back {
+  background: transparent;
+  color: var(--royal);
+  border-color: var(--royal) !important;
+}
+.btn-back:hover {
+  background: var(--ice);
+}
+#toggle-themes.theme-black,
+#toggle-themes.theme-red {
+  background: transparent;
+}
+
+@media (max-width: 600px) {
+  footer {
+    padding: 5px;
+    gap: 0.2rem;
+  }
+}
+
+/* === Pagina publică (view.html) === */
+.share-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  margin: -0.5rem 0 1.5rem;
+  padding-bottom: 0.8rem;
+  border-bottom: 1px solid var(--rule);
+  font-size: 14px;
+  color: var(--ink-3);
+}
+.share-banner__brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--royal-deep);
+  text-decoration: none;
+}
+.share-banner__brand:hover {
+  color: var(--royal);
+  text-decoration: none;
+}
+.share-banner__meta strong {
+  color: var(--ink);
+}
+.view-state {
+  padding: 3rem 0;
+  text-align: center;
+}
+.view-state h2 {
+  font-size: 1.6rem;
+  margin-bottom: 0.6rem;
+  color: var(--ink);
+}
+.view-state p {
+  color: var(--ink-3);
+  margin-bottom: 0.4rem;
+}
+.view-page .answer {
+  user-select: text;
+}
+@media print {
+  .share-banner {
+    display: none;
   }
 }

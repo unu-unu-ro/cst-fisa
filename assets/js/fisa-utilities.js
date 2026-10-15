@@ -67,6 +67,7 @@ const STEPS = [
     questions: [
       {
         label: "într-o singură propoziție scurtă",
+        hideLabelInPrint: true,
         field: "ideea-autorului",
         placeholder: "Formulează într-o propoziție clară și concisă ideea centrală a autorului",
         required: true
@@ -94,6 +95,7 @@ const STEPS = [
     questions: [
       {
         label: "într-o singură propoziție scurtă",
+        hideLabelInPrint: true,
         field: "ideea-mea",
         placeholder: "Formulează ideea centrală pe care o vei predica, bazată pe înțelegerea pasajului",
         required: true
@@ -199,6 +201,23 @@ function parseMarkdown(text) {
   text = text.replaceAll("  ", " &nbsp;"); // replace double spaces with non-breaking space
   const html = window.marked.parse(text);
   return window.DOMPurify.sanitize(html);
+}
+
+// Elimină paragrafele goale și <br>-urile de la finalul conținutului (pentru tipărire).
+function trimTrailingEmpty(html) {
+  if (!html) return "";
+  let out = html;
+  let prev;
+  do {
+    prev = out;
+    out = out
+      .replace(/\s+$/g, "")
+      .replace(/(<br\s*\/?>|&nbsp;|\s)+$/gi, "")
+      .replace(/(<br\s*\/?>|&nbsp;|\s)+(<\/(p|div)>)$/gi, "$2")
+      .replace(/<(p|div)>(\s|&nbsp;|<br\s*\/?>)*<\/\1>$/gi, "")
+      .replace(/<(p|div)>(\s|&nbsp;|<br\s*\/?>)*<\/\1>\s*$/gi, "");
+  } while (out !== prev);
+  return out;
 }
 
 function renderContent(value) {

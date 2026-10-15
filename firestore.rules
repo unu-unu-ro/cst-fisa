@@ -1,0 +1,39 @@
+rules_version = '2';
+
+// Fiecare utilizator își vede și își modifică doar propriile date:
+//   users/{uid}            → profil
+//   users/{uid}/fise/{id}  → fișele salvate
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isOwner(uid) {
+      return request.auth != null && request.auth.uid == uid;
+    }
+
+    match /users/{uid} {
+      allow read, write: if isOwner(uid);
+
+      match /fise/{fisaId} {
+        allow read, delete: if isOwner(uid);
+        allow create, update: if isOwner(uid)
+          && request.resource.data.keys().hasAll(['title', 'data', 'updatedAt'])
+          && request.resource.data.data is map
+          && request.resource.data.title is string;
+      }
+    }
+
+    // Fișe partajate public prin link: oricine le poate citi,
+    // doar proprietarul le poate crea, actualiza sau șterge.
+    match /public/{shareId} {
+      allow read: if true;
+      allow create, update: if request.auth != null
+        && request.resource.data.ownerUid == request.auth.uid
+        && request.resource.data.data is map;
+      allow delete: if request.auth != null
+        && resource.data.ownerUid == request.auth.uid;
+    }
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

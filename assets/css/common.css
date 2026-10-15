@@ -1,16 +1,50 @@
+/*
+ * Fișa interactivă — tokenuri preluate din sistemul editorial predicare-expozitiva.ro
+ * (octombrie 2026): fond alb, albastru royal ca prezență, cupru ca accent,
+ * linii în loc de carduri. Playfair Display (titluri) peste Source Sans 3 (text, UI).
+ */
 :root {
-  --primary-dark: #2a3f54;
-  --primary-accent: #005a5b;
-  --primary-accent-light: #005a5b50;
-  --text-primary: #333333;
-  --text-secondary: #555555;
-  --background-light: #ffffff;
-  --background-off-white: #f9f9f9;
-  --border-color: #e0e0e0;
+  --royal: #1848a8;
+  --royal-deep: #0f3580;
+  --royal-light: #b9c7e6;
+  --royal-pale: #dce5f7;
+  --royal-soft: #7e98d1;
+  --royal-line: #2a55b0;
 
-  --font-heading: "League Spartan", sans-serif;
-  --font-body: "Work Sans", Arial, sans-serif;
+  --copper: #c9683f;
+  --copper-light: #e8a27a;
 
+  --ice: #eef3fb;
+  --ice-line: #c5d0e6;
+
+  --ink: #0f1b33;
+  --ink-2: #2a3650;
+  --ink-3: #5b6478;
+
+  --rule: #d7deea;
+  --cream: #f4e6cc;
+  --destructive: #c62020;
+  --success: #1f7a4d;
+
+  --bg: #ffffff;
+
+  --font-display: "Playfair Display", Georgia, serif;
+  --font-body: "Source Sans 3", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --radius: 3px;
+  --container: 1168px;
+  --gutter: 24px;
+  --header-h: 56px;
+
+  /* Aliasuri pentru stilurile mai vechi (print-preview). */
+  --primary-dark: var(--ink);
+  --primary-accent: var(--royal);
+  --primary-accent-light: rgba(24, 72, 168, 0.3);
+  --text-primary: var(--ink);
+  --text-secondary: var(--ink-3);
+  --background-light: var(--bg);
+  --background-off-white: var(--ice);
+  --border-color: var(--rule);
   --max-width: 1050px;
 }
 
@@ -20,83 +54,202 @@
   box-sizing: border-box;
 }
 
+html {
+  text-wrap: pretty;
+  -webkit-text-size-adjust: 100%;
+}
+
 body {
   font-family: var(--font-body);
-  background-color: var(--background-light);
-  color: var(--text-primary);
+  background-color: var(--bg);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
 }
 
-#rich-toolbar-wrapper {
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  padding-bottom: 0.75rem;
-}
-/* first half white */
-#rich-toolbar-wrapper::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 44%;
-  background: #fff;
-  z-index: -1;
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  font-weight: 500;
 }
 
-.step {
-  margin-bottom: 1rem;
+::selection {
+  background: rgba(201, 104, 63, 0.25);
 }
 
-.step h3 {
-  font-family: var(--font-heading);
-  color: var(--primary-dark);
-  margin-bottom: 0.7rem;
+:focus-visible {
+  outline: 2px solid var(--copper);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Lățimea de pagină: 1120px + 24px lateral. */
+.container-site {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+/* Tipografie */
+.kicker {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--ink-3);
+}
+
+.num-label {
+  font-size: 13px;
   font-weight: 700;
-  letter-spacing: 1px;
-  padding-bottom: 0.3rem;
-  border-bottom: 2px solid var(--primary-accent);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--royal);
+  font-variant-numeric: tabular-nums;
 }
 
+.copper-rule {
+  display: block;
+  width: 48px;
+  height: 2px;
+  background: var(--copper);
+}
+
+/* Butoane */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  white-space: nowrap;
+  border-radius: var(--radius);
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  height: 44px;
+  padding: 0 20px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  text-decoration: none;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease,
+    border-color 0.15s ease;
+}
+.btn svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  pointer-events: none;
+}
+.btn:disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+.btn-primary {
+  background: var(--royal);
+  color: #fff;
+}
+.btn-primary:hover {
+  background: var(--royal-deep);
+}
+.btn-outline {
+  background: transparent;
+  color: var(--royal);
+  border-color: var(--royal);
+}
+.btn-outline:hover {
+  background: var(--ice);
+}
+.btn-ghost {
+  background: transparent;
+  color: var(--royal);
+}
+.btn-ghost:hover {
+  background: var(--ice);
+}
+.btn-secondary {
+  background: var(--ice);
+  color: var(--royal-deep);
+}
+.btn-secondary:hover {
+  background: rgba(197, 208, 230, 0.6);
+}
+.btn-danger {
+  background: transparent;
+  color: var(--destructive);
+  border-color: transparent;
+}
+.btn-danger:hover {
+  background: #fbeaea;
+}
+.btn-danger-solid {
+  background: var(--destructive);
+  color: #fff;
+}
+.btn-danger-solid:hover {
+  background: #a51818;
+}
+.btn-sm {
+  height: 36px;
+  padding: 0 14px;
+  font-size: 14px;
+}
+.btn-lg {
+  height: 48px;
+  padding: 0 24px;
+}
+
+/* Link cu săgeată */
+.arrow-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--royal);
+  text-decoration: none;
+  border-bottom: 1px solid var(--royal);
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+.arrow-link:hover {
+  color: var(--copper);
+  border-color: var(--copper);
+}
+
+/* Pașii (comun cu previzualizarea) */
 .step h3 .note {
-  font-weight: normal;
+  font-weight: 400;
+  font-style: italic;
+  color: var(--ink-3);
 }
 
 .step h3 i,
 .form-group label i,
 .question-label i {
-  border-bottom: 1px solid #005a5b36;
+  font-style: italic;
+  border-bottom: 1px solid rgba(24, 72, 168, 0.25);
 }
 
-footer {
-  display: flex;
-  gap: 1rem;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  padding: 5px 15px 5px 95px;
-  background: #ffffffaa;
-}
-footer .date {
-  font-size: 0.7rem;
-  color: var(--text-secondary);
-}
-footer .footer-text {
-  flex: 1;
-  font-size: 0.8rem;
-  text-align: center;
-  color: var(--text-primary);
-}
-footer .footer-text .copyright {
-  font-variant: small-caps;
-}
-footer img {
-  height: 36px;
-}
-
-@media (max-width: 600px) {
-  footer {
-    padding: 5px;
-    gap: 0.2rem;
-  }
+/* Accesibilitate */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }

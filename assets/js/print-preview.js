@@ -1,40 +1,3 @@
-function renderPreview(steps, values) {
-  document.title = getPageTitle(values["nume"], values["text"]);
-
-  const emptyAns = '<span class="empty-answer">Nu a fost completat</span>';
-
-  let html = `
-    <div id="header-fields" class="extra-row">
-      <span class="extra-label">Nume:</span>
-      <span class="extra-value">${values["nume"] || emptyAns}</span>
-      <span class="extra-label">Text:</span>
-      <span class="extra-value">${values["text"] || emptyAns}</span>
-      <span class="extra-label">Publicul țintă:</span>
-      <span class="extra-value">${values["target-public"] || emptyAns}</span>
-    </div>
-  `;
-
-  html += steps
-    .map(
-      step => `
-    <div class="step" id="step-${step.number}">
-      <h3>${step.number}. ${step.title}</h3>
-      ${step.questions
-        .map(
-          q => `
-        <div class="question">
-          <div class="question-label">${q.label}</div>
-          <div class="answer">${renderContent(values[q.field]) || emptyAns}</div>
-        </div>`
-        )
-        .join("")}
-    </div>`
-    )
-    .join("");
-
-  $("#preview-content").innerHTML = html;
-}
-
 const THEMES = ["theme-black", "theme-red"];
 
 function applyTheme(theme) {
@@ -62,7 +25,8 @@ function initThemeToggle() {
 
 document.addEventListener("DOMContentLoaded", () => {
   const values = getPersistedData();
-  renderPreview(STEPS, values);
+  document.title = getPageTitle(values["nume"], values["text"]);
+  renderPreview(STEPS, values, "#preview-content");
   initThemeToggle();
 
   // Auto-print if ?print=1 is in the URL
