@@ -175,7 +175,8 @@ const ICONS = {
   open: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3h7v7"/><path d="M10 14L21 3"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5"/></svg>`,
   copy: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>`,
   download: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M4 21h16"/></svg>`,
-  trash: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18"/><path d="M8 6V4h8v2"/><path d="M19 6l-1 14H6L5 6"/></svg>`
+  trash: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18"/><path d="M8 6V4h8v2"/><path d="M19 6l-1 14H6L5 6"/></svg>`,
+  refresh: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 3v6h-6"/></svg>`
 };
 
 /* ---------- Randare: panoul de utilizator ---------- */
@@ -309,48 +310,70 @@ function renderStatus() {
 
   const item = currentItem();
   const count = state.fise.length;
-  let row = "";
+  let icon = ICONS.cloudCheck;
+  let label = "";
   let meta = "";
+  let syncTitle = "Salvează acum în cont";
 
   if (state.save === "saving") {
     box.classList.add("is-saving");
-    row = `${ICONS.spinner}<strong>Se salvează în cont…</strong>`;
+    icon = ICONS.spinner;
+    label = "Se salvează în cont…";
+    syncTitle = "Se salvează…";
   } else if (state.save === "unsaved") {
     box.classList.add("is-saving");
-    row = `${ICONS.spinner}<strong>Modificări în așteptare…</strong>`;
+    icon = ICONS.spinner;
+    label = "Modificări în așteptare…";
+    syncTitle = "Salvează acum, fără să aștepți";
   } else if (state.save === "error") {
     box.classList.add("is-error");
-    row = `${ICONS.alert}<strong>Nu s-a putut salva în cont</strong>`;
+    icon = ICONS.alert;
+    label = "Nu s-a putut salva în cont";
+    syncTitle = "Reîncearcă salvarea";
     const e = state.lastError;
     const detail = e ? escapeHtml((e.code ? e.code + ": " : "") + (e.message || String(e))) : "";
     meta = `Datele rămân salvate în acest browser.${detail ? `<br /><code style="font-size:12px">${detail}</code>` : ""}`;
   } else if (state.current && item) {
     const when = state.lastSavedAt ? formatTime(state.lastSavedAt) : item.updatedAt ? formatDateTime(item.updatedAt) : "";
-    row = `${ICONS.cloudCheck}<strong>Salvat în cont</strong>${when ? `<span class="cloud-status__meta">${when}</span>` : ""}`;
+    label = `Salvat în cont${when ? `<span class="cloud-status__meta">${when}</span>` : ""}`;
   } else if (state.current) {
-    row = `${ICONS.cloudCheck}<strong>Salvat în cont</strong>`;
+    label = "Salvat în cont";
   } else {
-    row = `${ICONS.cloudOff}<strong>Fișă nouă</strong>`;
+    icon = ICONS.cloudOff;
+    label = "Fișă nouă";
     meta = "Se salvează automat în contul tău de la prima modificare.";
   }
 
   const title = item ? fisaTitle(item) : App.getPageTitle($("#nume")?.value, $("#text")?.value);
+  const iconBtn = (action, svg, text, extra) =>
+    `<button type="button" class="cloud-status__btn${extra && extra.cls ? " " + extra.cls : ""}" data-action="${action}" title="${escapeHtml(text)}" aria-label="${escapeHtml(text)}">${svg}${extra && extra.badge ? `<span class="cloud-status__badge">${extra.badge}</span>` : ""}</button>`;
+
   box.innerHTML = `
-    <div class="cloud-status__row">${row}</div>
+    <div class="cloud-status__row">
+      <button type="button" class="cloud-status__sync" data-action="sync" title="${escapeHtml(syncTitle)}" aria-label="${escapeHtml(syncTitle)}" ${state.save === "saving" ? "disabled" : ""}>${icon}</button>
+      <strong>${label}</strong>
+    </div>
     ${state.current ? `<div class="cloud-status__title">${escapeHtml(title)}</div>` : ""}
-    ${meta ? `<div class="cloud-status__meta">${meta}</div>` : ""}
+    ${meta ? `<div class="cloud-status__meta cloud-status__meta--block">${meta}</div>` : ""}
     <div class="cloud-status__actions">
-      <button type="button" class="btn btn-outline btn-sm" data-action="list">${ICONS.list} Fișele mele${count ? ` (${count})` : ""}</button>
-      <button type="button" class="btn btn-ghost btn-sm" data-action="new">${ICONS.plus} Fișă nouă</button>
-      ${item ? `<button type="button" class="btn btn-ghost btn-sm" data-action="share">${item.shareId ? ICONS.link + " Link public" : ICONS.share + " Partajează"}</button>` : ""}
-      ${state.save === "error" ? `<button type="button" class="btn btn-ghost btn-sm" data-action="retry">Reîncearcă</button>` : ""}
+      ${iconBtn("list", ICONS.list, `Fișele mele${count ? ` (${count})` : ""}`, { badge: count || "" })}
+      ${iconBtn("new", ICONS.plus, "Fișă nouă")}
+      ${item ? iconBtn("share", item.shareId ? ICONS.link : ICONS.share, item.shareId ? "Link public – copiază" : "Partajează", item.shareId ? { cls: "is-public" } : null) : ""}
+      ${state.save === "error" ? iconBtn("retry", ICONS.refresh, "Reîncearcă salvarea") : ""}
     </div>`;
+  $("[data-action='sync']", box).addEventListener("click", syncNow);
   $("[data-action='list']", box).addEventListener("click", openDrawer);
   $("[data-action='new']", box).addEventListener("click", newFisa);
   const share = $("[data-action='share']", box);
   if (share && item) share.addEventListener("click", () => shareFisa(item.id));
   const retry = $("[data-action='retry']", box);
-  if (retry) retry.addEventListener("click", () => scheduleSave(App.getFormValues(), true));
+  if (retry) retry.addEventListener("click", syncNow);
+}
+
+/** Salvare imediată, declanșată manual (norișorul din banda de stare / „Reîncearcă”). */
+function syncNow() {
+  if (!state.user || state.save === "saving") return;
+  scheduleSave(App.getFormValues(), true);
 }
 
 /* ---------- Randare: panoul „Fișele mele” ---------- */
@@ -360,6 +383,9 @@ function renderDrawer() {
   if (!drawer) return;
   const items = state.fise;
   const currentId = state.current ? state.current.id : null;
+
+  const itemBtn = (action, svg, text, cls) =>
+    `<button type="button" class="fisa-item__btn${cls ? " " + cls : ""}" data-action="${action}" title="${escapeHtml(text)}" aria-label="${escapeHtml(text)}">${svg}</button>`;
 
   const list = items.length
     ? items
@@ -380,16 +406,15 @@ function renderDrawer() {
             ${item.targetPublic ? `<span>${escapeHtml(item.targetPublic)}</span>` : ""}
             <span>Modificată ${escapeHtml(formatDateTime(item.updatedAt) || "recent")}</span>
           </div>
-          <div class="fisa-item__progress">
+          <div class="fisa-item__progress" title="${pct}% completat" aria-label="${pct}% completat">
             <div class="bar"><span style="width:${pct}%"></span></div>
-            <span>${item.progress || 0}/${item.total || 7} pași</span>
           </div>
           <div class="fisa-item__actions">
-            ${isCurrent ? "" : `<button type="button" class="simple-btn" data-action="open">${ICONS.open} Deschide</button>`}
-            <button type="button" class="simple-btn" data-action="share">${item.shareId ? ICONS.link + " Link public" : ICONS.share + " Partajează"}</button>
-            <button type="button" class="simple-btn" data-action="duplicate">${ICONS.copy} Duplică</button>
-            <button type="button" class="simple-btn" data-action="download">${ICONS.download} JSON</button>
-            <button type="button" class="simple-btn danger" data-action="delete">${ICONS.trash} Șterge</button>
+            ${isCurrent ? "" : itemBtn("open", ICONS.open, "Deschide fișa")}
+            ${item.shareId ? itemBtn("share", ICONS.link, "Link public – copiază", "is-public") : itemBtn("share", ICONS.share, "Partajează")}
+            ${itemBtn("duplicate", ICONS.copy, "Duplică")}
+            ${itemBtn("download", ICONS.download, "Descarcă JSON")}
+            ${itemBtn("delete", ICONS.trash, "Șterge", "danger")}
           </div>
         </article>`;
         })
