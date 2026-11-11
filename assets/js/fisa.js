@@ -346,11 +346,26 @@ function renderSteps(steps) {
   el.innerHTML = stepsHtml;
 }
 
-function openPreview(autoPrint) {
+const PRINT_DATA_KEY = "cst-print-data";
+
+// autoPrint: pornește direct dialogul de tipărire („Salvează ca PDF”).
+// data: o altă fișă decât cea din formular (ex. din „Fișele mele”).
+function openPreview(autoPrint, data) {
   persistFormData(null, { silent: true });
-  const url = autoPrint ? "print-preview?print=1" : "print-preview";
+  const params = new URLSearchParams();
+  if (autoPrint) params.set("print", "1");
+  if (data) {
+    localStorage.setItem(PRINT_DATA_KEY, JSON.stringify(data));
+    params.set("src", "item");
+  }
+  const qs = params.toString();
+  const url = qs ? `print-preview?${qs}` : "print-preview";
   if (previewWindow && !previewWindow.closed) {
-    if (autoPrint) previewWindow.location.href = url;
+    let showsOther = false;
+    try {
+      showsOther = previewWindow.location.search.includes("src=item");
+    } catch (e) {}
+    if (autoPrint || data || showsOther) previewWindow.location.href = url;
     else previewWindow.location.reload();
     previewWindow.focus();
   } else {
@@ -408,6 +423,7 @@ window.FisaApp = {
   showCustomAlert,
   closeCustomAlert,
   showToast,
+  openPreview,
   storageKeys: { STORAGE_KEY, USER_NAME_KEY, UPDATED_AT_KEY }
 };
 

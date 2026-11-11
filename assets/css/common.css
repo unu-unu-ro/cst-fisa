@@ -28,6 +28,25 @@
 
   --bg: #ffffff;
 
+  /* Tokenuri semantice (diferă între temă luminoasă și întunecată). */
+  color-scheme: light;
+  --surface: #ffffff;
+  --header-bg: rgba(255, 255, 255, 0.95);
+  --overlay: rgba(15, 27, 51, 0.45);
+  --ice-hover: rgba(197, 208, 230, 0.6);
+  --placeholder: #8e97aa;
+  --royal-fill: var(--royal);
+  --royal-fill-hover: var(--royal-deep);
+  --band-bg: var(--royal);
+  --on-band-muted: #dce5f7;
+  --footer-bg: #0f3580;
+  --toast-bg: var(--ink);
+  --notes-bg: #fffdf7;
+  --notes-line: #e9dfc6;
+  --danger-soft: #fbeaea;
+  --destructive-fill: #c62020;
+  --success-line: #9fd3b6;
+
   --font-display: "Playfair Display", Georgia, serif;
   --font-body: "Source Sans 3", system-ui, -apple-system, "Segoe UI", sans-serif;
 
@@ -46,6 +65,121 @@
   --background-off-white: var(--ice);
   --border-color: var(--rule);
   --max-width: 1050px;
+}
+
+/*
+ * Tema întunecată: automat după sistem (data-theme absent sau "auto"),
+ * sau forțat cu data-theme="dark" pe <html>. Vezi assets/js/theme.js.
+ */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --royal: #8aaaf0;
+  --royal-deep: #b4c8f5;
+  --royal-pale: #22355f;
+  --royal-light: #9fb4e3;
+  --copper: #e0845c;
+
+  --ice: #1a2540;
+  --ice-line: #2f3d5e;
+  --ice-hover: #26345a;
+
+  --ink: #e6ebf5;
+  --ink-2: #c3cbdb;
+  --ink-3: #939eb4;
+
+  --rule: #27324c;
+  --destructive: #ff7b7b;
+  --success: #5cc98f;
+
+  --bg: #0d1424;
+  --surface: #141d31;
+  --header-bg: rgba(13, 20, 36, 0.92);
+  --overlay: rgba(0, 0, 0, 0.6);
+  --placeholder: #66718a;
+  --royal-fill: #2f5fc4;
+  --royal-fill-hover: #3d6dd2;
+  --band-bg: #17398a;
+  --footer-bg: #0a1121;
+  --toast-bg: #2a3650;
+  --notes-bg: #1c1b1d;
+  --notes-line: #4a3f2c;
+  --danger-soft: #3a1a20;
+  --success-line: #2e6b4b;
+  --primary-accent-light: rgba(138, 170, 240, 0.3);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --royal: #8aaaf0;
+    --royal-deep: #b4c8f5;
+    --royal-pale: #22355f;
+    --royal-light: #9fb4e3;
+    --copper: #e0845c;
+
+    --ice: #1a2540;
+    --ice-line: #2f3d5e;
+    --ice-hover: #26345a;
+
+    --ink: #e6ebf5;
+    --ink-2: #c3cbdb;
+    --ink-3: #939eb4;
+
+    --rule: #27324c;
+    --destructive: #ff7b7b;
+    --success: #5cc98f;
+
+    --bg: #0d1424;
+    --surface: #141d31;
+    --header-bg: rgba(13, 20, 36, 0.92);
+    --overlay: rgba(0, 0, 0, 0.6);
+    --placeholder: #66718a;
+    --royal-fill: #2f5fc4;
+    --royal-fill-hover: #3d6dd2;
+    --band-bg: #17398a;
+    --footer-bg: #0a1121;
+    --toast-bg: #2a3650;
+    --notes-bg: #1c1b1d;
+    --notes-line: #4a3f2c;
+    --danger-soft: #3a1a20;
+    --success-line: #2e6b4b;
+    --primary-accent-light: rgba(138, 170, 240, 0.3);
+  }
+}
+
+/* Comutatorul de temă din header. */
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+  background: transparent;
+  color: var(--ink-2);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
+}
+.theme-toggle:hover {
+  background: var(--ice);
+  color: var(--royal);
+}
+.theme-toggle svg {
+  width: 18px;
+  height: 18px;
+  pointer-events: none;
+}
+.theme-toggle [data-icon] {
+  display: none;
+}
+.theme-toggle[data-mode="auto"] [data-icon="auto"],
+.theme-toggle[data-mode="light"] [data-icon="light"],
+.theme-toggle[data-mode="dark"] [data-icon="dark"] {
+  display: block;
 }
 
 * {
@@ -157,11 +291,11 @@ h4 {
   pointer-events: none;
 }
 .btn-primary {
-  background: var(--royal);
+  background: var(--royal-fill);
   color: #fff;
 }
 .btn-primary:hover {
-  background: var(--royal-deep);
+  background: var(--royal-fill-hover);
 }
 .btn-outline {
   background: transparent;
@@ -183,7 +317,7 @@ h4 {
   color: var(--royal-deep);
 }
 .btn-secondary:hover {
-  background: rgba(197, 208, 230, 0.6);
+  background: var(--ice-hover);
 }
 .btn-danger {
   background: transparent;
@@ -191,10 +325,10 @@ h4 {
   border-color: transparent;
 }
 .btn-danger:hover {
-  background: #fbeaea;
+  background: var(--danger-soft);
 }
 .btn-danger-solid {
-  background: var(--destructive);
+  background: var(--destructive-fill);
   color: #fff;
 }
 .btn-danger-solid:hover {

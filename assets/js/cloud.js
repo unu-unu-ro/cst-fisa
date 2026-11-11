@@ -176,6 +176,7 @@ const ICONS = {
   copy: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>`,
   download: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M4 21h16"/></svg>`,
   trash: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18"/><path d="M8 6V4h8v2"/><path d="M19 6l-1 14H6L5 6"/></svg>`,
+  pdf: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M12 11v6"/><path d="M9 14l3 3 3-3"/></svg>`,
   refresh: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 3v6h-6"/></svg>`
 };
 
@@ -358,12 +359,14 @@ function renderStatus() {
     <div class="cloud-status__actions">
       ${iconBtn("list", ICONS.list, `Fișele mele${count ? ` (${count})` : ""}`, { badge: count || "" })}
       ${iconBtn("new", ICONS.plus, "Fișă nouă")}
+      ${iconBtn("pdf", ICONS.pdf, "Salvează ca PDF")}
       ${item ? iconBtn("share", item.shareId ? ICONS.link : ICONS.share, item.shareId ? "Link public – copiază" : "Partajează", item.shareId ? { cls: "is-public" } : null) : ""}
       ${state.save === "error" ? iconBtn("retry", ICONS.refresh, "Reîncearcă salvarea") : ""}
     </div>`;
   $("[data-action='sync']", box).addEventListener("click", syncNow);
   $("[data-action='list']", box).addEventListener("click", openDrawer);
   $("[data-action='new']", box).addEventListener("click", newFisa);
+  $("[data-action='pdf']", box).addEventListener("click", () => App.openPreview(true));
   const share = $("[data-action='share']", box);
   if (share && item) share.addEventListener("click", () => shareFisa(item.id));
   const retry = $("[data-action='retry']", box);
@@ -412,6 +415,7 @@ function renderDrawer() {
           <div class="fisa-item__actions">
             ${isCurrent ? "" : itemBtn("open", ICONS.open, "Deschide fișa")}
             ${item.shareId ? itemBtn("share", ICONS.link, "Link public – copiază", "is-public") : itemBtn("share", ICONS.share, "Partajează")}
+            ${itemBtn("pdf", ICONS.pdf, "Salvează ca PDF")}
             ${itemBtn("duplicate", ICONS.copy, "Duplică")}
             ${itemBtn("download", ICONS.download, "Descarcă JSON")}
             ${itemBtn("delete", ICONS.trash, "Șterge", "danger")}
@@ -447,6 +451,7 @@ function renderDrawer() {
     const id = el.dataset.id;
     el.querySelectorAll("[data-action='open']").forEach(b => b.addEventListener("click", () => openFisa(id)));
     $("[data-action='share']", el).addEventListener("click", () => shareFisa(id));
+    $("[data-action='pdf']", el).addEventListener("click", () => printFisa(id));
     $("[data-action='duplicate']", el).addEventListener("click", () => duplicateFisa(id));
     $("[data-action='download']", el).addEventListener("click", () => downloadFisa(id));
     $("[data-action='delete']", el).addEventListener("click", () => deleteFisa(id));
@@ -778,6 +783,14 @@ function buildPayloadFrom(data, item) {
     total: item.total || 7,
     data
   };
+}
+
+// Fișa deschisă se tipărește din formular (include modificările nesalvate încă).
+function printFisa(id) {
+  const item = state.fise.find(f => f.id === id);
+  if (!item) return;
+  if (state.current && state.current.id === id) App.openPreview(true);
+  else App.openPreview(true, item.data || {});
 }
 
 function downloadFisa(id) {

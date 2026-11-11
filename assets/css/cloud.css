@@ -95,7 +95,7 @@
   right: 0;
   width: 320px;
   max-width: calc(100vw - 32px);
-  background: #fff;
+  background: var(--surface);
   border: 1px solid var(--rule);
   border-top: 3px solid var(--royal);
   border-radius: var(--radius);
@@ -197,7 +197,7 @@
 }
 .user-menu__actions .danger:hover {
   color: var(--destructive);
-  background: #fbeaea;
+  background: var(--danger-soft);
 }
 
 /* Starea de salvare */
@@ -212,7 +212,7 @@
   border: 1px solid var(--rule);
   border-left: 3px solid var(--royal);
   border-radius: var(--radius);
-  background: #fff;
+  background: var(--surface);
 }
 .cloud-status__row {
   display: flex;
@@ -331,7 +331,7 @@
   height: 15px;
   padding: 0 4px;
   border-radius: 8px;
-  background: var(--royal);
+  background: var(--royal-fill);
   color: #fff;
   font-size: 10px;
   font-weight: 700;
@@ -385,7 +385,7 @@
   position: fixed;
   inset: 0;
   z-index: 70;
-  background: rgba(15, 27, 51, 0.45);
+  background: var(--overlay);
   backdrop-filter: blur(2px);
   opacity: 0;
   pointer-events: none;
@@ -399,7 +399,7 @@
   z-index: 71;
   width: 460px;
   max-width: 100vw;
-  background: #fff;
+  background: var(--surface);
   box-shadow: -20px 0 50px rgba(15, 27, 51, 0.2);
   transform: translateX(100%);
   transition: transform 0.25s ease;
@@ -535,7 +535,7 @@
 .fisa-item__progress .bar span {
   display: block;
   height: 100%;
-  background: var(--royal);
+  background: var(--royal-fill);
 }
 .fisa-item__actions {
   display: flex;
@@ -579,13 +579,13 @@
 }
 .fisa-item__btn.danger:hover {
   color: var(--destructive);
-  background: #fbeaea;
+  background: var(--danger-soft);
 }
 
 /* Partajare publică */
 .fisa-item__badge--public {
   color: var(--success);
-  border-color: #9fd3b6;
+  border-color: var(--success-line);
 }
 .share-box {
   text-align: left;

@@ -17,7 +17,7 @@ main {
   position: sticky;
   top: 0;
   z-index: 50;
-  background: rgba(255, 255, 255, 0.95);
+  background: var(--header-bg);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   border-bottom: 1px solid var(--rule);
@@ -81,7 +81,7 @@ main {
 
 /* Bandă de titlu pe albastru royal */
 .page-header {
-  background: var(--royal);
+  background: var(--band-bg);
   color: #fff;
 }
 .page-header__grid {
@@ -111,7 +111,7 @@ main {
 .page-header__intro {
   font-size: 15px;
   line-height: 1.5;
-  color: var(--royal-pale);
+  color: var(--on-band-muted);
   align-self: end;
 }
 
@@ -136,7 +136,7 @@ main {
 
 /* Footer */
 .site-footer {
-  background: var(--royal-deep);
+  background: var(--footer-bg);
   color: var(--royal-light);
   margin-top: 56px;
 }

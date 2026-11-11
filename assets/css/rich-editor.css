@@ -34,7 +34,7 @@
 
 .rich-toolbar button:hover,
 .rich-toolbar .toolbar-color-btn:hover {
-  background: #fff;
+  background: var(--surface);
   border-color: var(--ice-line);
 }
 
@@ -88,6 +88,7 @@
 .bg-swatch {
   border-bottom-color: transparent;
   background-color: #ffff00;
+  color: #0f1b33;
   padding: 1px 3px;
 }
 
@@ -101,7 +102,7 @@
   font-size: 16px;
   line-height: 1.5;
   color: var(--ink);
-  background-color: #fff;
+  background-color: var(--surface);
   transition:
     border-color 0.15s ease,
     box-shadow 0.15s ease;
@@ -125,7 +126,7 @@
 
 .rich-editor:empty::before {
   content: attr(data-placeholder);
-  color: #8e97aa;
+  color: var(--placeholder);
   pointer-events: none;
   display: block;
 }
@@ -139,4 +140,9 @@
   font-size: inherit;
   font-family: inherit;
   line-height: inherit;
+}
+
+/* Textul evidențiat cu fundal (de obicei deschis) rămâne lizibil și în tema întunecată. */
+.rich-editor [style*="background-color"] {
+  color: #0f1b33;
 }
