@@ -286,91 +286,101 @@ function currentItem() {
 
 function renderStatus() {
   const box = $("#cloud-status");
+  const actions = $("#cloud-actions");
+  const bar = $("#docbar");
   if (!box) return;
-  box.className = "cloud-status";
+  box.className = "docbar__doc";
+  if (bar) bar.classList.remove("is-saving", "is-error");
+  if (actions) actions.innerHTML = "";
+
+  const docHtml = (icon, title, meta, opts) => `
+    <button type="button" class="docbar__sync" data-action="sync" title="${escapeHtml((opts && opts.syncTitle) || title)}" aria-label="${escapeHtml((opts && opts.syncTitle) || title)}" ${opts && opts.syncDisabled ? "disabled" : ""}>${icon}</button>
+    <div class="docbar__text">
+      <div class="docbar__title" title="${escapeHtml(title)}">${escapeHtml(title)}</div>
+      ${meta ? `<div class="docbar__meta">${meta}</div>` : ""}
+    </div>`;
 
   if (!isConfigured()) {
     box.classList.add("is-local");
-    box.innerHTML = `
-      <div class="cloud-status__row">${ICONS.device}<strong>Salvat doar în acest browser</strong></div>
-      <div class="cloud-status__meta">Datele rămân în browserul curent. Folosește „Descarcă raw.json” pentru o copie de siguranță.</div>`;
+    box.innerHTML = docHtml(
+      ICONS.device,
+      "Salvat doar în acest browser",
+      "Datele rămân în browserul curent. Pentru o copie de siguranță folosește „Descarcă raw.json” din meniul „…”.",
+      { syncDisabled: true }
+    );
     return;
   }
 
   if (!state.user) {
     box.classList.add("is-local");
-    box.innerHTML = `
-      <div class="cloud-status__row">${ICONS.device}<strong>Salvat doar în acest browser</strong></div>
-      <div class="cloud-status__meta">Conectează-te cu Google ca să păstrezi fișele în cont și să revii la ele de pe orice dispozitiv.</div>
-      <div class="cloud-status__actions">
-        <button type="button" class="btn btn-primary btn-sm" data-action="login" ${state.ready ? "" : "disabled"}>${ICONS.google} Conectare cu Google</button>
-      </div>`;
+    box.innerHTML = docHtml(
+      ICONS.device,
+      "Salvat doar în acest browser",
+      `<span>Conectează-te ca să păstrezi fișele în cont, de pe orice dispozitiv.</span>
+       <button type="button" class="docbar__link" data-action="login" ${state.ready ? "" : "disabled"}>${ICONS.google} Conectare cu Google</button>`,
+      { syncDisabled: true }
+    );
     $("[data-action='login']", box).addEventListener("click", login);
     return;
   }
 
   const item = currentItem();
   const count = state.fise.length;
+  const title = item ? fisaTitle(item) : state.current ? App.getPageTitle($("#nume")?.value, $("#text")?.value) : "Fișă nouă";
   let icon = ICONS.cloudCheck;
-  let label = "";
   let meta = "";
   let syncTitle = "Salvează acum în cont";
 
   if (state.save === "saving") {
     box.classList.add("is-saving");
     icon = ICONS.spinner;
-    label = "Se salvează în cont…";
+    meta = "Se salvează în cont…";
     syncTitle = "Se salvează…";
   } else if (state.save === "unsaved") {
     box.classList.add("is-saving");
     icon = ICONS.spinner;
-    label = "Modificări în așteptare…";
+    meta = "Modificări în așteptare…";
     syncTitle = "Salvează acum, fără să aștepți";
   } else if (state.save === "error") {
     box.classList.add("is-error");
     icon = ICONS.alert;
-    label = "Nu s-a putut salva în cont";
     syncTitle = "Reîncearcă salvarea";
     const e = state.lastError;
     const detail = e ? escapeHtml((e.code ? e.code + ": " : "") + (e.message || String(e))) : "";
-    meta = `Datele rămân salvate în acest browser.${detail ? `<br /><code style="font-size:12px">${detail}</code>` : ""}`;
+    meta = `<span>Nu s-a putut salva în cont · datele rămân în acest browser.</span>
+      <button type="button" class="docbar__link" data-action="retry">${ICONS.refresh} Reîncearcă</button>
+      ${detail ? `<code title="${detail}">${detail}</code>` : ""}`;
   } else if (state.current && item) {
     const when = state.lastSavedAt ? formatTime(state.lastSavedAt) : item.updatedAt ? formatDateTime(item.updatedAt) : "";
-    label = `Salvat în cont${when ? `<span class="cloud-status__meta">${when}</span>` : ""}`;
+    meta = `Salvat în cont${when ? ` · ${when}` : ""}`;
   } else if (state.current) {
-    label = "Salvat în cont";
+    meta = "Salvat în cont";
   } else {
     icon = ICONS.cloudOff;
-    label = "Fișă nouă";
-    meta = "Se salvează automat în contul tău de la prima modificare.";
+    meta = "Se salvează automat în cont de la prima modificare.";
   }
 
-  const title = item ? fisaTitle(item) : App.getPageTitle($("#nume")?.value, $("#text")?.value);
-  const iconBtn = (action, svg, text, extra) =>
-    `<button type="button" class="cloud-status__btn${extra && extra.cls ? " " + extra.cls : ""}" data-action="${action}" title="${escapeHtml(text)}" aria-label="${escapeHtml(text)}">${svg}${extra && extra.badge ? `<span class="cloud-status__badge">${extra.badge}</span>` : ""}</button>`;
+  if (bar) {
+    if (state.save === "error") bar.classList.add("is-error");
+    else if (state.save === "saving" || state.save === "unsaved") bar.classList.add("is-saving");
+  }
 
-  box.innerHTML = `
-    <div class="cloud-status__row">
-      <button type="button" class="cloud-status__sync" data-action="sync" title="${escapeHtml(syncTitle)}" aria-label="${escapeHtml(syncTitle)}" ${state.save === "saving" ? "disabled" : ""}>${icon}</button>
-      <strong>${label}</strong>
-    </div>
-    ${state.current ? `<div class="cloud-status__title">${escapeHtml(title)}</div>` : ""}
-    ${meta ? `<div class="cloud-status__meta cloud-status__meta--block">${meta}</div>` : ""}
-    <div class="cloud-status__actions">
-      ${iconBtn("list", ICONS.list, `Fișele mele${count ? ` (${count})` : ""}`, { badge: count || "" })}
-      ${iconBtn("new", ICONS.plus, "Fișă nouă")}
-      ${iconBtn("pdf", ICONS.pdf, "Salvează ca PDF")}
-      ${item ? iconBtn("share", item.shareId ? ICONS.link : ICONS.share, item.shareId ? "Link public – copiază" : "Partajează", item.shareId ? { cls: "is-public" } : null) : ""}
-      ${state.save === "error" ? iconBtn("retry", ICONS.refresh, "Reîncearcă salvarea") : ""}
-    </div>`;
+  box.innerHTML = docHtml(icon, title, meta, { syncTitle, syncDisabled: state.save === "saving" });
   $("[data-action='sync']", box).addEventListener("click", syncNow);
-  $("[data-action='list']", box).addEventListener("click", openDrawer);
-  $("[data-action='new']", box).addEventListener("click", newFisa);
-  $("[data-action='pdf']", box).addEventListener("click", () => App.openPreview(true));
-  const share = $("[data-action='share']", box);
-  if (share && item) share.addEventListener("click", () => shareFisa(item.id));
   const retry = $("[data-action='retry']", box);
   if (retry) retry.addEventListener("click", syncNow);
+
+  if (!actions) return;
+  const iconBtn = (action, svg, text, extra) =>
+    `<button type="button" class="docbar__btn${extra && extra.cls ? " " + extra.cls : ""}" data-action="${action}" title="${escapeHtml(text)}" aria-label="${escapeHtml(text)}">${svg}${extra && extra.badge ? `<span class="docbar__badge">${extra.badge}</span>` : ""}</button>`;
+  actions.innerHTML = `
+    ${iconBtn("list", ICONS.list, `Fișele mele${count ? ` (${count})` : ""}`, { badge: count || "" })}
+    ${iconBtn("new", ICONS.plus, "Fișă nouă")}
+    ${item ? iconBtn("share", item.shareId ? ICONS.link : ICONS.share, item.shareId ? "Link public – copiază" : "Partajează", item.shareId ? { cls: "is-public" } : null) : ""}`;
+  $("[data-action='list']", actions).addEventListener("click", openDrawer);
+  $("[data-action='new']", actions).addEventListener("click", newFisa);
+  const share = $("[data-action='share']", actions);
+  if (share && item) share.addEventListener("click", () => shareFisa(item.id));
 }
 
 /** Salvare imediată, declanșată manual (norișorul din banda de stare / „Reîncearcă”). */

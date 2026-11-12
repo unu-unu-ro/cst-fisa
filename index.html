@@ -22,11 +22,11 @@
       href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Source+Sans+3:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="assets/css/common.css?v=20261111a" />
-    <link rel="stylesheet" href="assets/css/rich-editor.css?v=20261111a" />
-    <link rel="stylesheet" href="assets/css/style.css?v=20261111a" />
-    <link rel="stylesheet" href="assets/css/fisa.css?v=20261111a" />
-    <link rel="stylesheet" href="assets/css/cloud.css?v=20261111a" />
+    <link rel="stylesheet" href="assets/css/common.css?v=20261112a" />
+    <link rel="stylesheet" href="assets/css/rich-editor.css?v=20261112a" />
+    <link rel="stylesheet" href="assets/css/style.css?v=20261112a" />
+    <link rel="stylesheet" href="assets/css/fisa.css?v=20261112a" />
+    <link rel="stylesheet" href="assets/css/cloud.css?v=20261112a" />
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
     <link rel="shortcut icon" href="assets/favicon.ico" />
   </head>
@@ -62,7 +62,7 @@
           </svg>
         </button>
 
-        <div id="user-panel" class="user-panel" aria-live="polite"></div>
+        <div id="user-panel" class="user-panel"></div>
       </div>
     </header>
 
@@ -82,42 +82,60 @@
 
     <main class="container-site fisa-main">
 
-      <div class="workbar">
-        <div class="workbar__progress">
-          <div class="workbar__counter">
-            <span class="num-label">Progres</span>
-            <span>pasul <span id="currentStep">1</span> din 7</span>
+      <!-- Bara fișei: identitate + stare de salvare | progres | acțiuni. Marginea de jos este bara de progres. -->
+      <div class="docbar" id="docbar">
+        <div id="cloud-status" class="docbar__doc"></div>
+
+        <div class="docbar__side">
+          <div class="docbar__progress" id="progressLabel">
+            <span class="docbar__step">Pasul <span id="currentStep">1</span> din 7</span>
             <button type="button" id="openFormattingHelp" class="info-btn" title="Ghid de formatare" aria-label="Ghid de formatare">
               i
             </button>
           </div>
-          <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="7" aria-valuenow="0">
-            <div class="progress-fill" id="progressFill"></div>
+
+          <div class="docbar__actions">
+            <span id="cloud-actions" class="docbar__group"></span>
+            <button type="button" id="previewPdf" class="docbar__btn" title="Salvează ca PDF" aria-label="Salvează ca PDF">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" /><path d="M14 2v6h6" /><path d="M12 11v6" /><path d="M9 14l3 3 3-3" />
+              </svg>
+            </button>
+            <div class="docbar__more">
+              <button type="button" id="moreMenuTrigger" class="docbar__btn" title="Mai multe acțiuni" aria-label="Mai multe acțiuni" aria-haspopup="true" aria-expanded="false">
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <circle cx="5" cy="12" r="1.8" /><circle cx="12" cy="12" r="1.8" /><circle cx="19" cy="12" r="1.8" />
+                </svg>
+              </button>
+              <div class="docbar__menu" id="moreMenu" hidden>
+                <button type="button" id="loadJson" title="Încarcă datele dintr-un fișier raw.json salvat anterior">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M12 3v12" /><path d="M7 8l5-5 5 5" /><path d="M4 21h16" />
+                  </svg>
+                  Încarcă raw.json
+                </button>
+                <button type="button" id="downloadJson" title="Descarcă datele în format raw.json pentru editări ulterioare">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M12 3v12" /><path d="M7 10l5 5 5-5" /><path d="M4 21h16" />
+                  </svg>
+                  Descarcă raw.json
+                </button>
+                <div class="docbar__menu-sep" role="separator"></div>
+                <button type="button" id="resetForm" class="danger" title="Golește toate câmpurile">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M3 6h18" /><path d="M8 6V4h8v2" /><path d="M19 6l-1 14H6L5 6" /><path d="M10 11v6M14 11v6" />
+                  </svg>
+                  Resetează câmpurile
+                </button>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="workbar__tools">
-          <button type="button" id="resetForm" class="simple-btn" title="Golește toate câmpurile">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M3 6h18" /><path d="M8 6V4h8v2" /><path d="M19 6l-1 14H6L5 6" /><path d="M10 11v6M14 11v6" />
-            </svg>
-            Resetează câmpurile
-          </button>
-          <button type="button" id="loadJson" class="simple-btn" title="Încarcă datele dintr-un fișier raw.json salvat anterior">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M12 3v12" /><path d="M7 8l5-5 5 5" /><path d="M4 21h16" />
-            </svg>
-            Încarcă raw.json
-          </button>
-          <button type="button" id="downloadJson" class="simple-btn" title="Descarcă datele în format raw.json pentru editări ulterioare">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M12 3v12" /><path d="M7 10l5 5 5-5" /><path d="M4 21h16" />
-            </svg>
-            Descarcă raw.json
-          </button>
+
+        <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="7" aria-valuenow="0" aria-labelledby="progressLabel">
+          <div class="progress-fill" id="progressFill"></div>
         </div>
       </div>
-
-      <div id="cloud-status" class="cloud-status is-local"></div>
 
       <div id="header-fields" class="extra-fields">
         <div class="form-group">
@@ -236,8 +254,13 @@
                 automat în cont la fiecare modificare, fără niciun buton de salvare.
               </li>
               <li>
-                <strong>Fișele mele</strong> &mdash; din meniul contului sau din banda de stare. Poți deschide o fișă
-                mai veche, o poți duplica pentru un pasaj nou, descărca ca JSON sau șterge.
+                <strong>Bara fișei</strong> &mdash; sub titlu: norișorul arată starea salvării (apasă-l ca să salvezi
+                imediat), urmat de titlul fișei. În dreapta: progresul, „Fișele mele”, „Fișă nouă”, partajarea, PDF-ul
+                și meniul „&hellip;” cu acțiunile rare.
+              </li>
+              <li>
+                <strong>Fișele mele</strong> &mdash; din bara fișei sau din meniul contului. Poți deschide o fișă mai
+                veche, o poți duplica pentru un pasaj nou, descărca ca JSON sau șterge.
               </li>
               <li>
                 <strong>Partajare prin link</strong> &mdash; „Partajează” face fișa publică și îți dă un link pe care
@@ -249,12 +272,13 @@
                 Butonul <em>i</em> de lângă progres explică fiecare opțiune.
               </li>
               <li>
-                <strong>Previzualizare PDF</strong> &mdash; butonul de la finalul formularului deschide fișa în formatul
-                oficial, de unde o poți salva ca PDF sau tipări.
+                <strong>Previzualizare PDF</strong> &mdash; iconița PDF din bara fișei sau butonul de la finalul
+                formularului deschide fișa în formatul oficial, de unde o poți salva ca PDF sau tipări.
               </li>
               <li>
-                <strong>Backup fără cont</strong> &mdash; „Descarcă raw.json” salvează un fișier pe calculator, iar
-                „Încarcă raw.json” îl readuce în formular, pe orice dispozitiv.
+                <strong>Backup fără cont</strong> &mdash; din meniul „&hellip;” al barei: „Descarcă raw.json” salvează un
+                fișier pe calculator, iar „Încarcă raw.json” îl readuce în formular, pe orice dispozitiv. Tot acolo
+                este și „Resetează câmpurile”.
               </li>
             </ul>
           </div>
@@ -347,14 +371,14 @@
     <script src="assets/external/dompurify.min.js"></script>
 
     <!-- App Scripts -->
-    <script src="assets/js/theme.js?v=20261111a"></script>
-    <script src="assets/js/utilities.js?v=20261111a"></script>
-    <script src="assets/js/fisa-utilities.js?v=20261111a"></script>
-    <script src="assets/js/rich-editor.js?v=20261111a"></script>
-    <script src="assets/js/fisa.js?v=20261111a"></script>
+    <script src="assets/js/theme.js?v=20261112a"></script>
+    <script src="assets/js/utilities.js?v=20261112a"></script>
+    <script src="assets/js/fisa-utilities.js?v=20261112a"></script>
+    <script src="assets/js/rich-editor.js?v=20261112a"></script>
+    <script src="assets/js/fisa.js?v=20261112a"></script>
 
     <!-- Cont Google + Firestore (opțional; se activează după completarea firebase-config.js) -->
-    <script src="assets/js/firebase-config.js?v=20261111a"></script>
-    <script type="module" src="assets/js/cloud.js?v=20261111a"></script>
+    <script src="assets/js/firebase-config.js?v=20261112a"></script>
+    <script type="module" src="assets/js/cloud.js?v=20261112a"></script>
   </body>
 </html>

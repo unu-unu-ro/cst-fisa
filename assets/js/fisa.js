@@ -123,6 +123,8 @@ function updateProgress() {
   const bar = fill.parentElement;
   if (bar) bar.setAttribute("aria-valuenow", String(completed));
   $("#currentStep").textContent = current;
+  const label = $("#progressLabel");
+  if (label) label.title = `${completed} din ${total} pași completați`;
 }
 
 // Form validation
@@ -468,6 +470,32 @@ document.addEventListener("DOMContentLoaded", function () {
 
   $("#loadJson").addEventListener("click", loadJson);
   $("#downloadJson").addEventListener("click", () => downloadJson());
+
+  // Bara fișei: PDF + meniul „…” (acțiuni rare)
+  const previewBtn = $("#previewPdf");
+  if (previewBtn) previewBtn.addEventListener("click", () => openPreview(true));
+
+  const moreTrigger = $("#moreMenuTrigger");
+  const moreMenu = $("#moreMenu");
+  if (moreTrigger && moreMenu) {
+    const setMenu = open => {
+      moreMenu.hidden = !open;
+      moreTrigger.setAttribute("aria-expanded", String(open));
+    };
+    moreTrigger.addEventListener("click", e => {
+      e.stopPropagation();
+      setMenu(moreMenu.hidden);
+    });
+    moreMenu.addEventListener("click", e => {
+      if (e.target.closest("button")) setMenu(false);
+    });
+    document.addEventListener("click", e => {
+      if (!moreMenu.hidden && !e.target.closest(".docbar__more")) setMenu(false);
+    });
+    document.addEventListener("keydown", e => {
+      if (e.key === "Escape" && !moreMenu.hidden) setMenu(false);
+    });
+  }
 
   // Generate PDF button
   $("#generatePDF").addEventListener("click", generatePDF);

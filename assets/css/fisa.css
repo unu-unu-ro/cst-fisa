@@ -5,36 +5,303 @@
   padding-bottom: 24px;
 }
 
-/* Bara de lucru: progres + unelte */
-.workbar {
+/* Bara fișei: o singură bandă pentru identitate + stare de salvare, progres și acțiuni.
+   Marginea de jos a benzii este chiar bara de progres. */
+.docbar {
+  position: relative;
+  /* Lățimea vine de la pagină, nu de la titlul pe un rând (main e fit-content în body flex). */
+  contain: inline-size;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 12px 24px;
-  padding: 14px 0;
+  gap: 8px 20px;
+  padding: 10px 0 12px;
   border-bottom: 1px solid var(--rule);
 }
-.workbar__progress {
-  flex: 1 1 260px;
+
+/* Zona stângă: norișor + titlu + stare (randată din cloud.js) */
+.docbar__doc {
+  flex: 1 1 280px;
+  min-width: 0;
   display: flex;
-  flex-direction: column;
+  align-items: center;
   gap: 8px;
 }
-.workbar__counter {
+.docbar__sync {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 34px;
+  height: 34px;
+  margin-left: -6px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--royal);
+  cursor: pointer;
+  transition:
+    background 0.15s ease,
+    transform 0.15s ease;
+}
+.docbar__sync svg {
+  width: 20px;
+  height: 20px;
+}
+.docbar__sync:hover:not(:disabled) {
+  background: var(--ice);
+  transform: scale(1.08);
+}
+.docbar__sync:focus-visible {
+  outline: 2px solid var(--royal);
+  outline-offset: 1px;
+}
+.docbar__sync:disabled {
+  cursor: default;
+}
+.docbar__text {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.docbar__title {
+  font-family: var(--font-display);
+  font-size: 16px;
+  line-height: 1.2;
+  color: var(--ink);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.docbar__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 2px 8px;
+  font-size: 12.5px;
+  line-height: 1.3;
+  color: var(--ink-3);
+}
+.docbar__meta code {
+  font-size: 11.5px;
+}
+.docbar__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 0;
+  border: none;
+  background: none;
+  font-family: var(--font-body);
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--royal);
+  cursor: pointer;
+  text-decoration: underline;
+  text-decoration-color: var(--royal-light);
+  text-underline-offset: 2px;
+}
+.docbar__link svg {
+  width: 13px;
+  height: 13px;
+}
+.docbar__link:hover {
+  text-decoration-color: var(--royal);
+}
+.docbar__link:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+/* Stările de salvare colorează norișorul și marginea de jos */
+.docbar__doc.is-local .docbar__sync {
+  color: var(--ink-3);
+  cursor: default;
+}
+.docbar__doc.is-saving .docbar__sync {
+  color: var(--copper);
+}
+.docbar__doc.is-saving .docbar__sync svg {
+  animation: spin 1s linear infinite;
+}
+.docbar__doc.is-error .docbar__sync {
+  color: var(--destructive);
+}
+.docbar__doc.is-error .docbar__meta {
+  color: var(--destructive);
+}
+.docbar__doc.is-error .docbar__meta code {
+  color: var(--ink-3);
+}
+
+/* Zona dreaptă: progres + acțiuni */
+.docbar__side {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+  margin-left: auto;
+}
+.docbar__progress {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink-2);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.docbar__step #currentStep {
+  color: var(--royal);
+}
+.docbar__actions {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+.docbar__group {
+  display: contents;
+}
+.docbar__group:not(:empty)::after {
+  content: "";
+  display: block;
+  width: 1px;
+  height: 18px;
+  margin: 0 4px;
+  background: var(--rule);
+}
+.docbar__btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: none;
+  border-radius: var(--radius);
+  background: transparent;
+  color: var(--royal);
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+.docbar__btn svg {
+  width: 17px;
+  height: 17px;
+  pointer-events: none;
+}
+.docbar__btn:hover,
+.docbar__btn[aria-expanded="true"] {
+  background: var(--ice);
+}
+.docbar__btn:focus-visible {
+  outline: 2px solid var(--royal);
+  outline-offset: 1px;
+}
+.docbar__btn.is-public {
+  color: var(--copper);
+}
+.docbar__badge {
+  position: absolute;
+  top: 1px;
+  right: 0;
+  min-width: 15px;
+  height: 15px;
+  padding: 0 4px;
+  border-radius: 8px;
+  background: var(--royal-fill);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 15px;
+  text-align: center;
+  pointer-events: none;
+}
+.docbar__badge:empty {
+  display: none;
+}
+
+/* Meniul „mai multe” (raw.json, resetare) */
+.docbar__more {
+  position: relative;
+}
+.docbar__menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  z-index: 60;
+  width: 240px;
+  padding: 6px;
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-top: 3px solid var(--royal);
+  border-radius: var(--radius);
+  box-shadow: 0 16px 40px rgba(15, 27, 51, 0.18);
+  animation: fadeIn 0.15s ease;
+}
+.docbar__menu[hidden] {
+  display: none;
+}
+.docbar__menu button {
   display: flex;
   align-items: center;
   gap: 10px;
-  font-size: 14px;
-  font-weight: 600;
+  width: 100%;
+  height: 38px;
+  padding: 0 10px;
+  background: none;
+  border: none;
+  border-radius: var(--radius);
+  font-family: var(--font-body);
+  font-size: 14.5px;
+  font-weight: 500;
   color: var(--ink-2);
+  text-align: left;
+  cursor: pointer;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
 }
-.workbar__counter .num-label {
-  margin-right: 4px;
+.docbar__menu button svg {
+  width: 16px;
+  height: 16px;
+  color: var(--ink-3);
+}
+.docbar__menu button:hover {
+  background: var(--ice);
+  color: var(--royal);
+}
+.docbar__menu button:hover svg {
+  color: inherit;
+}
+.docbar__menu .danger:hover {
+  color: var(--destructive);
+  background: var(--danger-soft);
+}
+.docbar__menu .danger:hover svg {
+  color: inherit;
+}
+.docbar__menu-sep {
+  height: 1px;
+  margin: 6px 4px;
+  background: var(--rule);
+}
+
+/* Bara de progres = marginea de jos a benzii */
+.docbar .progress-bar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  width: auto;
 }
 .progress-bar {
   width: 100%;
-  height: 4px;
-  background: var(--rule);
+  height: 3px;
+  background: transparent;
   overflow: hidden;
 }
 .progress-fill {
@@ -46,36 +313,27 @@
 .progress-fill.is-complete {
   background: var(--copper);
 }
-.workbar__tools {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 4px;
+.docbar.is-saving .progress-fill {
+  background: var(--copper);
 }
-.simple-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  background: none;
-  border: none;
-  border-radius: var(--radius);
-  color: var(--ink-3);
-  font-family: var(--font-body);
-  font-size: 14px;
-  font-weight: 500;
-  padding: 6px 10px;
-  cursor: pointer;
-  transition:
-    color 0.15s ease,
-    background-color 0.15s ease;
+.docbar.is-error .progress-fill {
+  background: var(--destructive);
 }
-.simple-btn:hover {
-  color: var(--royal);
-  background: var(--ice);
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
-.simple-btn svg {
-  width: 15px;
-  height: 15px;
+
+@media (max-width: 640px) {
+  .docbar__doc {
+    flex-basis: 100%;
+  }
+  .docbar__side {
+    width: 100%;
+    justify-content: space-between;
+    margin-left: 0;
+  }
 }
 
 /* Buton info */
